@@ -1,0 +1,127 @@
+{{ attach_library('fgmc_forms/fgmc_forms_custom_css') }}
+
+<input type="hidden" id="products_count" value="{{name.count}}" />
+{% if name.count < 8 and name.is_mobile == 'desktop' %}
+
+{{ attach_library('customise/customise.product_slider_below7') }}
+
+<section class="sky row know-slider">
+<div class="container">
+{% for key, prod in name.result %}
+<div class="know-slide {{prod.nid|raw}}">
+					<h3 class="text-center">Did you know?</h3>
+					{{prod.product_dyk|raw}}
+				</div>
+	{% endfor %}
+</div>
+</section>
+ 
+<section class="carousal container">
+	<div id="wrapper_bu">
+		{% for key, prod in name.result %}
+			
+			<div id="bu{{key}}" data-prodid="{{prod.nid|raw}}">				
+				<div class="slide">
+						<div class="overlay"></div>
+					<div class="header">
+						<h4>{{prod.title|raw}}</h4>
+                                                <span class="prodtype hide">{{prod.product_type|raw}}</span>
+					</div>
+					<div class="body">
+						<div class="video">
+							{% if prod.product_image is not empty %}
+									<img class="img-responsive" src="{{ prod.product_image}}" alt="slider-video">
+									{% else %}
+									<img class="img-responsive" src="{{ url('<front>') }}{{ base_path ~ directory }}/images/slider-video-1.png" alt="slider-video">
+									{% endif %}
+						</div>
+						<div class="content">
+							<h4>Why choose {{prod.product_vowel}} {{prod.title|raw}}?</h4>
+								{{prod.product_long_desc|raw}}
+						</div>
+					</div>
+					<div class="footer text-center">
+						<button class="btn btn-success wmproduct">Apply Now</button>
+						<button class="btn btn-success" onclick="location.href='/quick_rate_landing'">Get rate quote</button>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+		
+	</div>
+</section>
+{% else %}
+
+{{ attach_library('customise/customise.product_slider_more7') }}
+<section class="sky row know-slider">
+<div class="container">
+{% for key, prod in name.result %}
+<div class="know-slide {{prod.nid|raw}}">
+					<h3 class="text-center">Did you know?</h3>
+					{{prod.product_dyk|raw}}
+				</div>
+	{% endfor %}
+</div>
+</section>
+
+<section class="row">
+<div class="container">
+	<div class="cascade-slider_container" id="cascade-slider">
+		<div class="cascade-slider_slides">
+			{% for key, prod in name.result %}
+				
+				<div class="cascade-slider_item" data-prodid="{{prod.nid|raw}}">
+						<div class="slide">
+							<div class="overlay"></div>
+							<div class="header">
+								<h4>{{prod.title|raw}}</h4>
+							</div>
+							<div class="body">
+								<div class="video">
+									{% if prod.product_image %}
+									<img class="img-responsive" src="{{ prod.product_image}}" alt="slider-video">
+									{% else %}
+									<img class="img-responsive" src="{{ url('<front>') }}{{ base_path ~ directory }}/images/products.jpg" alt="slider-video">
+									{% endif %}
+								</div>
+								<div class="content">
+									<h4>Why choose {{prod.product_vowel}} {{prod.title|raw}}?</h4>
+									<ul>
+										{{prod.product_long_desc|raw}}
+									</ul>
+								</div>
+							</div>
+							<div class="footer text-center">
+								<button class="btn btn-success wmproduct">Apply Now</button>
+								<button class="btn btn-success" onclick="location.href='/quick_rate_landing'">Get rate quote</button>
+							</div>
+						</div>
+				</div>
+			{% endfor %}
+		</div>
+		<div class="row  product-slide">
+			<div class="col-xs-2 text-right">
+				<a href="javascript:void(0)" class="prev" id="leftArrow"> </a>
+			</div> 
+			<div class="col-xs-8">
+				<ol class="cascade-slider_nav">
+				{% for key, prod in name.result %}
+					
+					{% if key == 1 %}
+							<li class="cascade-slider_dot cur" data-prodid="{{prod.nid|raw}}"><div class="bullets"> <img class="img-responsive" src="{{ url('<front>') }}{{ base_path ~ directory }}/images/datepicker.png" alt=""></div>  <span>{{prod.title|raw}}</span></li>
+					{% else %}
+							<li class="cascade-slider_dot" data-prodid="{{prod.nid|raw}}"><div class="bullets"> <img class="img-responsive" src="{{ url('<front>') }}{{ base_path ~ directory }}/images/datepicker.png" alt=""></div> <span>{{prod.title|raw}}</span> </li>
+					{% endif %}		
+				{% endfor %}
+				</ol>
+			</div> 
+			<div class="col-xs-2">
+				<a href="javascript:void(0)" class="next"  id="rightArrow"> </a>
+			</div> 
+		</div>
+		 <span class="cascade-slider_arrow cascade-slider_arrow-left" data-action="prev"></span>
+      <span class="cascade-slider_arrow cascade-slider_arrow-right" data-action="next"></span>
+	</div>
+	</div>
+</section>
+{% endif %}

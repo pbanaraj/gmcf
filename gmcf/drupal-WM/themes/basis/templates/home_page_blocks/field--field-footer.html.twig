@@ -1,0 +1,75 @@
+{% set displayType = node.hasField('field_block_display_type') ? node.get('field_block_display_type').value : '' %}
+{%
+  set classes = [
+    'field',
+    'field--name-' ~ field_name|clean_class,
+    'field--type-' ~ field_type|clean_class,
+    'field--label-' ~ label_display,
+  ]
+%}
+{%
+  set title_classes = [
+    'field__label',
+    label_display == 'visually_hidden' ? 'visually-hidden',
+  ]
+%}
+
+{% if displayType  == 'rates' %}
+    <div class="paddTB15 rate-section-footer">
+	<div class="rate-content pull-left">
+    <span>Rates as of <span id="ratetime">.....</span> (EST) on <span id="ratedate">.....</span></span>
+    <span id="ratedatetimeresponse" style="display:none;"></span></div>
+    {% if label_hidden %}
+      {% if multiple %}
+        <div{{ attributes.addClass(classes, 'field__items') }}>
+          {% for item in items %}
+                {{ item.attributes.addClass('field__item') }}>{{ item.content }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {% for item in items %}
+                {{ item.content }}
+        {% endfor %}
+      {% endif %}
+    {% else %}
+      <div{{ attributes.addClass(classes) }}>
+        <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
+        {% if multiple %}
+          <div class="field__items">
+        {% endif %}
+        {% for item in items %}
+            {{ item.content }}
+        {% endfor %}
+        {% if multiple %}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+{% else %}
+    {% if label_hidden %}
+      {% if multiple %}
+        <div{{ attributes.addClass(classes, 'field__items') }}>
+          {% for item in items %}
+                <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+          {% endfor %}
+        </div>
+      {% else %}
+        {% for item in items %}
+            <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+        {% endfor %}
+      {% endif %}
+    {% else %}
+      <div{{ attributes.addClass(classes) }}>
+        <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
+        {% if multiple %}
+          <div class="field__items">
+        {% endif %}
+        {% for item in items %}
+            <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+        {% endfor %}
+        {% if multiple %}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+{% endif %}

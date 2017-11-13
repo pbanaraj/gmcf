@@ -1,0 +1,91 @@
+<?php
+
+/**
+ * @file
+ * Contains preview.module..
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Symfony\Component\HttpFoundation;
+use Symfony\Component\HttpFoundation\RequestStack;
+
+
+/**
+ * Implements hook_help().
+ */
+function preview_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the preview module.
+    case 'help.page.preview':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The module generate the preview for the page') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function preview_theme() {
+  $theme = [];
+  $theme['homepagepreview'] = [
+    'variables' => ['data' => null],
+    'template' => 'home_page_preview'
+  ];
+  
+  return $theme;
+}
+function preview_link_alter(&$variables) {
+
+  /**
+   * The URL of the link.
+   *
+   * @var Url
+   */
+   /*if(isset($variables['url']) && !empty($variables['url'])){
+		$url = $variables['url'];  
+	 echo $url;
+		$route_name = $url->getRouteName();
+		if ($route_name == 'preview.page_preview_getPagePreview') {
+		  $variables['options']['attributes'] = ['target' => '_blank'];
+		} 
+   }*/
+   $url = $variables['url'];   
+   // Return early where possible.
+  if ($url->isExternal()) {
+    return;
+  }
+  else {
+    $route_name = $url->getRouteName();
+    if ($route_name == 'preview.page_preview_getPagePreview' || $route_name == 'preview.page_preview_products') {
+      $variables['options']['attributes'] = ['target' => '_blank'];
+    }    
+  }
+   
+  
+}
+/**
+ * Implements hook_form alter().
+ */
+function preview_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+
+    $forms = array('node_basic_page_form', 'node_basic_page_edit_form', 'node_home_page_blocks_edit_form','node_banner_edit_form');
+    if(!in_array($form_id, $forms)){        
+        unset($form['actions']['preview']);
+    }
+    if (($form_id == 'node_basic_page_edit_form') || ($form_id == 'node_home_page_blocks_edit_form') || ($form_id == 'node_banner_edit_form')) {
+        $form['#attributes']['target'] = '_blank';
+        $form['#attached']['library'][] = 'preview/custom-css-js';
+    }
+	if ($form_id == 'block_content_basic_edit_form' || $form_id == 'menu_edit_form') {
+		$account = \Drupal::currentUser();    
+		$roles = $account->getRoles();
+		if(!in_array('administrator', $roles)){
+			unset($form['actions']['delete']);
+		}
+	}
+
+}

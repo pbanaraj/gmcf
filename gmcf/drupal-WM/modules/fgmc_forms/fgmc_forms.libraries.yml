@@ -1,0 +1,23 @@
+fgmc_forms.icons:
+  version: VERSION
+  css:    
+   theme:
+     css/toolbar.css: {}
+fgmc_forms.confirm:
+  version: VERSION
+  js:       
+     js/jquery.validate.min.js: {}
+     js/fgmc_forms.js: {}
+fgmc_forms_custom_css:
+  version: VERSION
+  css:    
+   theme:
+     css/style.css: {}
+fgmc_forms_modaljs:
+  version: VERSION
+  js:
+    js/rate_block.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings

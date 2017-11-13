@@ -1,0 +1,19 @@
+name: Basis
+type: theme
+base theme: classy
+Description: "A modern & reponsive Drupal 8 Theme"
+package: custom
+core: 8.x
+
+libraries: 
+- basis/global-styling
+- basis/slider-jquery-cycle
+
+regions:
+  header: header
+  slidenav: slide navigation
+  contenttop: content top
+  content: content
+  contentbottom : Content bottom
+  sidebar: sidebar
+  footer: Footer 

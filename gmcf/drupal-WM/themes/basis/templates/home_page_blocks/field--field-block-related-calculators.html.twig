@@ -1,0 +1,43 @@
+{# Default Values #}
+{% set displayType = node.hasField('field_block_display_type') ? node.get('field_block_display_type').value : '' %}
+{% set columns =  node.hasField('field_number_of_columns_per_row') ? node.get('field_number_of_columns_per_row').value : '' %}
+
+{#
+/**
+ * Available variables
+ * 
+ * items - to access nodes item.content['#node']
+ * parentNode
+ * columns
+ */
+
+#}
+{#API call data#}
+{% set data_rates = get_mi_rates() %}
+<div class="col-lg-7 lightPink wow fadeIn" >
+    <div class="row">
+      {% for item in items %}
+        {#node#}
+        {% set node = item.content['#node'] %}
+        {% if node.bundle() == 'calculators' %}
+          <div class="col-lg-6 col-sm-10 col-md-4 num-block">
+            {#Internal calculators Path#}
+            {% set internal_path = '' %}
+            {% if node.field_linked_to_calculator_refer.target_id is not empty %}
+              {% set internal_path = getInternalPathFromTargetID(node.field_linked_to_calculator_refer.target_id) %}
+            {% endif %}
+            <div class="col">
+              <div class="row vertical-align">
+                <div class="col-md-9">{{node.title.value}}</div>
+               {% if internal_path is empty %}
+                    <div class="col-md-3 borderT"><i class="fa fa-angle-right" aria-hidden="true"></i> </div>
+               {% else %}
+                    <div class="col-md-3 borderT"><a href="{{internal_path}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a> </div>
+               {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}      
+    </div>
+</div>

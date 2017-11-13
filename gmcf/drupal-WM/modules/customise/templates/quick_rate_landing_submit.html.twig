@@ -1,0 +1,409 @@
+		{{ attach_library('customise/quick_rate') }} 
+		<section class="section-0 container" id="qrq_submit">
+		<input type="hidden" id="loan_products_arr" value="{{name.form_info.qrq_loan_product | json_encode()}}"/>
+			<div class="row ">
+				<div class="col-lg-3  col-md-4">
+				<div id="quick-rates" class="rate-quote">
+						{% if name.form_info.qrq_is_military is defined %}
+							{% set mil_check = "checked" %}
+						{% else %}
+							{% set mil_check = "" %}
+						{% endif %}
+						{% if name.form_info.qrq_lender_credit is defined %}
+							{% set lender_check = "checked" %}
+						{% else %}
+							{% set lender_check = "" %}
+						{% endif %}
+						{% if name.active_tab == "purchase" %}
+							{% set active_tab = "active" %}
+							{% set active_tab_in = "in" %}
+						{% else %}
+							{% set active_tab = "" %}
+							{% set active_tab_in = "" %}
+						{% endif %}
+						{% if name.active_tab == "refinance" %}
+							{% set active_tab1 = "active" %}
+							{% set active_tab1_in = "in" %}
+						{% else %}
+							{% set active_tab1 = "" %}
+							{% set active_tab1_in = "" %}
+						{% endif %}
+						{% if name.form_info.qrq_customer_name is not empty and name.hide == true %}
+							{% set readonly_name = 'readonly' %}
+						{% else %}
+							{% set readonly_name = '' %}
+						{% endif %}
+						{% if name.form_info.qrq_customer_phone is not empty and name.hide == true %}
+							{% set readonly_phone = 'readonly' %}
+						{% else %}
+							{% set readonly_phone = '' %}
+						{% endif %}
+						{% if name.form_info.qrq_customer_email is not empty and name.hide == true %}
+							{% set readonly_email = 'readonly' %}
+						{% else %}
+							{% set readonly_email = '' %}
+						{% endif %}
+					<h3 class="rate-quote-title text-center">Quick Rate Quote </h3>
+					<ul class="nav nav-tabs text-center">
+						<li class="{{active_tab}}"><a data-toggle="tab" href="#purchase">Purchase</a></li>
+						<li class="{{active_tab1}}"><a data-toggle="tab" href="#refinance">Refinance</a></li>
+					</ul>
+					<input type="hidden" id="type_form" value="qrq" />
+					<input type="hidden" id="rates_data" value="{{name.quick_rates|json_encode()}}" />
+					<div class="tab-content">
+						<div id="purchase" class="tab-pane fade {{active_tab_in}} {{active_tab}}">
+							<form class="form" role="form" method="POST" action="{{path('customise.quick_rate_submit')}}" id="quick_rate_form">
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_purchase_price" name="qrq_purchase_price" placeholder="Purchase Price" value="{{name.form_info.qrq_purchase_price}}" maxlength="12" onkeypress="return isNumber(event)">
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_down_payment" name="qrq_down_payment" placeholder="Down Payment" value="{{name.form_info.qrq_down_payment}}" maxlength="12" onkeypress="return isNumber(event)">
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_zipcode" name="qrq_zipcode" placeholder="Zip Code" value="{{name.form_info.qrq_zipcode}}" maxlength="5" onkeypress="return isNumber(event)">
+                                                                        <input type="hidden" class="form-control ignore valid qrq_city" id="qrq_city"  name="qrq_city"   value="{{name.form_info.qrq_city}}" maxlength="50" >
+                                                                        <input type="hidden" class="form-control ignore valid qrq_state" id="qrq_state" name="qrq_state"  value="{{name.form_info.qrq_state}}" maxlength="10" >
+                                                                        <input type="hidden" class="form-control ignore valid "  name="qrq_leadid"  value="{{name.leadId}}" maxlength="50" >
+								</div>
+								<div class="form-group">
+									<select class="form-control" name="qrq_credit_score">
+										<option value="">Credit Score</option>
+										{% for key_crd, val_crd in name.credit_scores %}
+										{% if name.form_info.qrq_credit_score == key_crd %}
+											{% set selected = "selected" %}
+										{% else %}
+											{% set selected = "" %}	
+										{% endif %}
+										<option value="{{key_crd}}" {{selected}}>{{val_crd}}</option>
+										{% endfor %}
+									</select>
+								</div>
+								<div class="form-group multiSelect">
+									<select class="form-control select_loan_products" name="qrq_loan_product[]" multiple="multiple">										
+										{% for key_prd, val_prd in name.loan_products %}										
+										<option value="{{key_prd}}">{{val_prd}}</option>
+										{% endfor %}
+									</select>
+									<input type="hidden" name="qrq_loan_product_hidden" value="" />
+								</div>
+								<div class="checkbox">								
+									<label>
+											<input type="checkbox" name="qrq_is_military" {{mil_check}}> Military / Veteran?
+										</label>
+								</div>
+								<hr>
+								
+                                                                
+                                                                <div class="form-group">
+									<input type="text" class="form-control" id="qrq_customer_firstname" name="qrq_customer_firstname" placeholder="First Name" value="{{name.form_info.qrq_customer_firstname}}" maxlength="50" onkeypress="return onlyAlphabets(event)" {{readonly_name}}>
+								</div>
+                                                                
+                                                                <div class="form-group">
+									<input type="text" class="form-control" id="qrq_customer_lastname" name="qrq_customer_lastname" placeholder="Last Name" value="{{name.form_info.qrq_customer_lastname}}" maxlength="50" onkeypress="return onlyAlphabets(event)" {{readonly_name}}>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_customer_phone" name="qrq_customer_phone" placeholder="Phone" maxlength="14" value="{{name.form_info.qrq_customer_phone}}" {{readonly_phone}}>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_customer_email" name="qrq_customer_email" placeholder="Email" value="{{name.form_info.qrq_customer_email}}" maxlength="255" {{readonly_email}}>
+                                                                   	{% if name.email_valid == false %}
+{#                                                                            <div id="qrq_customer_email-error" class="error">Please enter a valid email address.</div>	#}
+				
+                                                                        {% endif %}     
+								</div>			
+								<div class="accordion">
+									<div class="accordion-head">
+										<h4><i> Advanced</i> <span class="arrow down"></span></h4>
+									</div>
+									<div class="accordion-body">
+										<div class="form-group">
+											<select class="form-control" name="qrq_property_type" id="qrq_property_type">											
+												<option value="">Property Type</option>
+												{% for key_prt, val_prt in name.property_types %}	
+													{% if name.form_info.qrq_property_type == key_prt %}
+														{% set selected_prt = "selected" %}
+													{% else %}
+														{% set selected_prt = "" %}	
+													{% endif %}
+													<option value="{{key_prt}}" {{selected_prt}}>{{val_prt}}</option>
+												{% endfor %}
+											</select>
+										</div>
+										<div class="form-group">
+											<select class="form-control" name="qrq_occupency_type" id="qrq_occupency_type">
+												<option value="">Occupancy</option>
+												{% for key_oct, val_oct in name.occupency_types %}	
+													{% if name.form_info.qrq_occupency_type == key_oct %}
+														{% set selected_ocp = "selected" %}
+													{% else %}
+														{% set selected_ocp = "" %}	
+													{% endif %}
+													<option value="{{key_oct}}" {{selected_ocp}}>{{val_oct}}</option>
+												{% endfor %}
+											</select>
+										</div>
+										<div class="form-group">
+											<!--
+											<div class="row">
+												<div class="col-xs-10">
+													<input type="text" class="form-control" id="exampleInputPassword2" placeholder="Cash Out" name="qrq_cash_out" maxlength="12" onkeypress="return isNumber(event)">
+												</div>
+												<div class="col-xs-2"><img src="/themes/basis/images/info.png" alt=""> </div>
+											</div>
+											-->
+										</div>
+										<div class="checkbox">
+											<label>
+												<input type="checkbox" name="qrq_lender_credit" {{lender_check}}> Lender Credit <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Lender credits may lower your up front closing costs and are typically given in exchange for a higher interest rate"><img src="{{url('<front>')}}/themes/basis/images/info.png" alt=""></a> 
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group text-center">
+									<button type="submit" class="btn btn-success" id="show_quote_submit">Show Quote</button>
+								</div>
+							</form>
+						</div>
+						<div id="refinance" class="tab-pane fade {{active_tab1_in}} {{active_tab1}}">
+							<form class="form" role="form" method="POST" action="{{path('customise.quick_rate_submit')}}" id="quick_rate_ref_form">
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_home_value" name="qrq_home_value" placeholder="Home Value" value="{{name.form_info.qrq_home_value}}" maxlength="12" onkeypress="return isNumber(event)">
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_current_balance" name="qrq_current_balance" placeholder="Current Balance" value="{{name.form_info.qrq_current_balance}}" maxlength="12" onkeypress="return isNumber(event)">
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_zipcode" name="qrq_zipcode" placeholder="Zip Code" value="{{name.form_info.qrq_zipcode}}" maxlength="5" onkeypress="return isNumber(event)">
+                                                                        <input type="hidden" class="form-control ignore valid qrq_city" id="qrq_city" name="qrq_city"   value="{{name.form_info.qrq_city}}" maxlength="50" >
+                                                                        <input type="hidden" class="form-control ignore valid qrq_state" id="qrq_state" name="qrq_state"  value="{{name.form_info.qrq_state}}" maxlength="10" >
+                                                                         <input type="hidden" class="form-control ignore valid "  name="qrq_leadid"  value="{{name.leadId}}" maxlength="50" >
+								</div>
+								<div class="form-group">
+									<select class="form-control" name="qrq_credit_score">
+										<option value="">Credit Score</option>
+										{% for key_crd, val_crd in name.credit_scores %}										
+										{% if name.form_info.qrq_credit_score == key_crd %}
+											{% set selected11 = "selected" %}
+										{% else %}
+											{% set selected11 = "" %}	
+										{% endif %}
+										<option value="{{key_crd}}" {{selected11}}>{{val_crd}}</option>
+										{% endfor %}
+									</select>
+								</div>
+								<div class="form-group multiSelect">
+									<select class="form-control select_loan_products" name="qrq_loan_product[]" multiple="multiple">										
+										{% for key_prd, val_prd in name.loan_products %}										
+										<option value="{{key_prd}}">{{val_prd}}</option>
+										{% endfor %}
+									</select>
+									<input type="hidden" name="qrq_loan_product_hidden" value="" />
+								</div>
+								<div class="checkbox">
+									<label>
+											<input type="checkbox" name="qrq_is_military" {{mil_check}}> Military / Veteran?
+										</label>
+								</div>
+								<hr>								
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_customer_firstname" name="qrq_customer_firstname" placeholder="First Name" value="{{name.form_info.qrq_customer_firstname}}" maxlength="50" onkeypress="return onlyAlphabets(event)" {{readonly_name}}>
+								</div>
+                                                                
+                                                                <div class="form-group">
+									<input type="text" class="form-control" id="qrq_customer_lastname" name="qrq_customer_lastname" placeholder="Last Name" value="{{name.form_info.qrq_customer_lastname}}" maxlength="50" onkeypress="return onlyAlphabets(event)" {{readonly_name}}>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_customer_phone_ref" name="qrq_customer_phone" placeholder="Phone" maxlength="14" value="{{name.form_info.qrq_customer_phone}}" {{readonly_phone}}>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_customer_email" name="qrq_customer_email" placeholder="Email" value="{{name.form_info.qrq_customer_email}}" maxlength="255" {{readonly_email}}>
+                                                                        {% if name.email_valid == false %}
+{#                                                                            <div id="qrq_customer_email-error" class="error">Please enter a valid email address.</div>	#}
+                                                                        {% endif %}     
+								</div>
+								<div class="accordion">
+									<div class="accordion-head">
+										<h4><i> Advance</i> <span class="arrow down"></span></h4>
+									</div>
+									<div class="accordion-body">
+										<div class="form-group">
+											<select class="form-control" name="qrq_property_type" id="qrq_property_type">
+												<option value="">Property Type</option>
+												{% for key_prt, val_prt in name.property_types %}	
+													{% if name.form_info.qrq_property_type == key_prt %}
+														{% set selected_prt = "selected" %}
+													{% else %}
+														{% set selected_prt = "" %}	
+													{% endif %}
+													<option value="{{key_prt}}" {{selected_prt}}>{{val_prt}}</option>
+												{% endfor %}
+											</select>
+										</div>
+										<div class="form-group">
+											<select class="form-control" name="qrq_occupency_type" id="qrq_occupency_type">
+												<option value="">Occupancy</option>
+												{% for key_oct, val_oct in name.occupency_types %}	
+													{% if name.form_info.qrq_occupency_type == key_oct %}
+														{% set selected_ocp = "selected" %}
+													{% else %}
+														{% set selected_ocp = "" %}	
+													{% endif %}
+													<option value="{{key_oct}}" {{selected_ocp}}>{{val_oct}}</option>
+												{% endfor %}
+											</select>
+										</div>
+										<div class="form-group">
+											<div class="row">
+												<div class="col-xs-10">
+													<input type="text" class="form-control" id="exampleInputPassword2" placeholder="Cash Out" name="qrq_cash_out" maxlength="12" onkeypress="return isNumber(event)" value="{{name.form_info.qrq_cash_out}}">
+												</div>
+												<div class="col-xs-2"><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="With a cashout refinance you can access cash from the equity in your home to pay down debt or make additional purchases.  Note that the interest rate may be higher on a cash-out refinance than on a standard rate-and-term refinance."><img src="{{url('<front>')}}/themes/basis/images/info.png" alt=""></a> </div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group text-center">
+									<button type="submit" class="btn btn-success" id="show_quote_ref_submit">Show Quote</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				</div>
+				<div class="col-lg-9 col-md-8 qr_search_results">
+                                    {% if name.email_valid == false %}
+                                           <h4 class="no-data text-center">Please check the email address you entered. It's invalid.</h4>
+                                     {% elseif name.rates | length ==0 %}
+										{% if name.form_info | length > 0 %}
+											<h4 class="no-data text-center">There are no results for the values you entered, please try again</h4>
+										{% else %}
+											<h4 class="no-data text-center">There are no results. Please try again after sometime.</h4>
+										{% endif %}
+                                     {% else %}
+
+					<div class="marT25">
+						<h4 class="success_msg">
+						{% if name.form_info.qrq_customer_firstname is not empty %}
+							{{name.form_info.qrq_customer_firstname}}, {{name.success_msg | raw}}
+						{% else %}
+							{{name.success_msg | raw}}
+						{% endif %}
+						</h4>
+						<div class="row">
+							<div class="form-group">
+								<div class="pull-right">
+									<select class="form-control filter sortRates">
+										<option value="LMP">Lowest Monthly payment</option>
+										<option value="LR">Lowest Rate</option>
+										<option value="LF">Lowest Costs</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="accordion qrq_accordion" id="quick_rate_result">
+							{% set i=0 %}
+							{% for key,rate in name.rates %}
+							{% set replace = ' ' %}
+							{% set replace_with = '_' %} 
+
+							{% set newkey = key|replace({ (replace): replace_with }) %}
+							{% if i==0 %}
+							{% set openclass = "open" %}
+							{% set openactive = "openactive" %}
+							{% else %}
+							{% set openclass = "" %}
+							{% set openactive = "" %}
+							{% endif %}
+							<div class="accordion-head {{openclass}}">
+								<h4>{{ key }}</h4>
+								<div class="arrow down"></div>
+
+							</div>
+							<div class="accordion-body {{openactive}}">
+								<div class="table-responsive">
+									<table class="table cal-table">
+										<thead>
+											<tr>
+												{% for key, val_qrq in name.result %}
+													<th>{{val_qrq.label}}
+													{% if val_qrq.help_text is not empty %}
+														<a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="{{val_qrq.help_text}}"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+													{% endif %}
+													</th>
+												{% endfor %}												
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+                                                                                    {% set n = 0 %}
+										{% for key1,rate1 in rate %}	
+                                                                                    {% if n<3 %}
+											<tr>
+												<td data-title="{{name.result.0.label}}">{{rate1.Rate}}%</td>
+												<td data-title="{{name.result.1.label}}">{{rate1.APR}}%</td>
+												{% if 'ARM' in key %}
+													<td data-title="{{name.result.2.label}}">${{rate1.MonthlyPayment}}<a class="arm-disclaimer" data-toggle="modal" href="#myModal_discliamers" data-rate="{{rate1.Rate}}" data-apr="{{rate1.APR}}" data-points="{{rate1.points}}" data-product="{{key}}">View Future Adjustment</a></td>
+												{% else %}
+													<td data-title="{{name.result.2.label}}">${{rate1.MonthlyPayment}}</td>
+												{% endif %}
+												<td data-title="{{name.result.3.label}}">${{rate1.credit}}<span class="small-txt">@ {{rate1.points}} points</span></td>
+												<td data-title="{{name.result.4.label}}">${{rate1.TotalFees}}</td>
+												<td class="text-center" rate="{{rate1.Rate}}" apr="{{rate1.APR}}" monthlypayment="{{rate1.MonthlyPayment}}" points="{{rate1.points}}" credit="{{rate1.credit}}" totalfees="{{rate1.TotalFees}}"><a class="select-rate btn" href="javascript:void(0)">Select Rate</a></td>
+											</tr>	
+                                                                                        {% set n = n+1  %}
+                                                                                    {% endif %}
+										{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+							{% set i= i+1 %}
+							{% endfor %}
+						</div>
+					</div>
+                                      {% endif %}  
+<div class="panel panel-default">        
+				<div class="panel-heading">
+					<h4 class="panel-title">         
+					Disclaimer
+					</h4>
+				</div>
+				<div id="collapse_disclosure">
+					<div class="panel-body">
+						{{name.arm_disclaimer | raw}}
+					</div>
+				</div>
+			</div>						  
+				</div>
+
+			</div>
+		</section>
+<div class="modal fade in" id="myModal_discliamers" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content terms">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          x
+        </button>
+        <h4>Adjustable Rate Mortgage</h4>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+    </div>
+  </div>
+</div>
+		{{ attach_library('customise/product-slider') }} 
+                
+                
+               {% if(name.leadId) %}
+                   <script>
+                       	localStorage.setItem("leadId",'{{name.leadId | raw }}');
+                   </script>
+               {% endif %}  
+               <script>
+                    jQuery(window).unload(function(){
+                        localStorage.clear();
+                      });
+                   </script>

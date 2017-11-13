@@ -1,0 +1,16 @@
+fgmc_homepage.rates:
+  version: VERSION
+  js:
+     js/mi_rates.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+fgmc_homepage.banner.testimonials:
+  version: VERSION
+  js:
+     js/homepage_testimonials.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings

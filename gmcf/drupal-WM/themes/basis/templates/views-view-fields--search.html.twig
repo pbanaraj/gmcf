@@ -1,0 +1,49 @@
+	{% if fields.type.content == "basic_page" %}
+        {% set in_link = "/node/" ~ fields.nid.content %}
+	{% elseif fields.type.content == "calculators" %}
+        {% set in_link = "/calculators" %}
+	{% elseif fields.type.content == "products" %}
+        {% set in_link = "/products#" ~  fields.nid.content %}
+	{% elseif fields.type.content == "education_tiles" %}
+        {% set in_link = "/mortgage_school_detail" %}
+	{% elseif fields.type.content == "education_sections" %}
+        {% set in_link = "/mortgage_school_sections_detail/collapse" ~ fields.nid.content %}
+	{% elseif fields.type.content == "why_us" %}
+        {% set in_link = "/why-goodmortgage" %}
+	{% elseif fields.type.content == "testimonials" %}
+        {% set in_link = "/" %}
+	{% elseif fields.type.content == "why_us_certificates" %}
+        {% set in_link = "/why-goodmortgage" %}
+	{% elseif fields.type.content == "why_us_testimonials" %}
+        {% set in_link = "/why-goodmortgage" %}
+	{% elseif fields.type.content == "good_mortgate_tv" %}
+        {% set in_link = "/good-mortgage-tv" %}
+	{% elseif fields.type.content == "job_openings" %}
+        {% set in_link = "/careers#job_" ~ fields.nid.content %}
+	{% elseif fields.type.content == "leaders" %}
+        {% set in_link = "/about-us" %}
+	{% elseif fields.type.content == "mortgage_license" %}
+        {% set in_link = "/state-mortgage-licenses" %}
+	{% elseif fields.type.content == "tour_album" %}
+        {% set in_link = "/careers#job_" ~ fields.nid.content %}
+	{% elseif fields.type.content == "terms_and_disclosure" %}
+        {% set in_link = "/" %}
+	{% elseif fields.type.content == "terms_of_use" %}
+        {% set in_link = "/terms-of-use#terms_" ~ fields.nid.content %}
+	{% elseif fields.type.content == "disclosures" %}
+        {% set in_link = "/disclosures#disc_" ~ fields.nid.content %}
+	{% elseif fields.type.content == "privacy_policy" %}
+        {% set in_link = "/privacy-policy#privacy_" ~ fields.nid.content %}
+	{% else %}
+		{% set in_link = "#" %}
+	{% endif %}
+	
+	<div class="panel panel-default">
+		<div class="panel-heading"><a href="{{in_link}}">{{ fields.title.content }}</a></div>
+		<div class="panel-body">
+			<p>{{ fields.body.content }}</p>
+			<div class="more text-right">
+				<a href="{{in_link}}">Read more <span class="glyphicon glyphicon-circle-arrow-right"></span></a>
+			</div>
+		</div>
+	</div>

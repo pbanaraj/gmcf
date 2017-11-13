@@ -1,0 +1,21 @@
+<div class="side-menu-wrapper">
+				<a href="#" class="menu-close">×</a>
+				<div class="nav-logo">
+					{{slidemenu_icon | raw}}
+				</div>
+				<nav>
+					<ul class="mob-side-nav hidden-lg hidden-md">
+						{% if page == 'inner'  %}
+							<li><button class="btn btn-success signin">Sign In</button></li>
+							<li><button class="btn btn-success signin">Apply</button></li>
+						{% else %}
+							<li><button class="btn btn-success signin">Sign In</button></li>
+						{% endif %}
+					</ul>
+					<ul class="side-nav">
+						{% for key, item in slide_menu %}
+						<li><a href="{{ item.url }}" class="{{ item.class }}" target="{{ item.target }}"> {{ item.title }}</a> </li>
+						{% endfor %}
+					</ul>					
+				</nav>
+			</div>

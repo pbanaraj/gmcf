@@ -1,0 +1,60 @@
+{{ attach_library('fgmc_forms/fgmc_forms_custom_css') }}
+{{ attach_library('fgmc_forms/fgmc_forms.confirm') }}
+<div class="table-responsive">
+	<form method="POST" action="{{path('fgmc_forms_adminquickratessubmit')}}">
+    <table class="table"> 
+        <tbody>
+          {% if data.rates %} 
+            {% for key,rate in data.rates %}
+			
+			{% set replace = ' ' %}
+			{% set replace_with = '_' %} 
+
+			{% set newkey = key|replace({ (replace): replace_with }) %}
+              <tr>
+                <td colspan="6"><b>{{ key }}</b></td>
+			  </tr>
+			  <tr>
+					<th>Rate</th>
+					<th>APR</th>
+					<th>MonthlyPayment</th>
+					<th>Points/credits</th>
+					<th>Fees</th>
+					<th>Select/Unselect</th>
+			  </tr>
+			  {% for key1,rate1 in rate %}
+			  <tr>
+                <td>{{rate1.Rate}}</td>
+				<td>{{rate1.APR}}</td>
+				<td>{{rate1.MonthlyPayment}}</td>
+				<td>{{rate1.points}} / {{rate1.credit}} </td>
+				<td>{{rate1.TotalFees}}</td>
+                <td>
+				{% if data.settedadminrates[newkey]['rates']['key_row'] is empty %}
+					{% set keyrow = -1 %}
+				{% else %}
+					{% set keyrow = data.settedadminrates[newkey]['rates']['key_row'] %}
+				{% endif %}
+				{% if rate1.Rate in data.settedadminrates[newkey]['rates']['key_row'] %}
+					{% set check = "checked" %}
+				{% else %}
+					{% set check = "" %}
+				{% endif %}
+				<input type="checkbox" class="validate_quick_rates" name="{{newkey}}[{{rate1.Rate | trim}}][key_data]" value="{{rate1|json_encode()}}" data-key="{{newkey}}" data-key1="{{key1}}" {{check}}/>			
+				</td>
+			  </tr>		
+			 {% endfor %}			 
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="6" class="no-data" style="text-align:center;">
+                No Admin Rates found.
+              </td>
+            </tr>
+          {% endif %}
+        </tbody>
+    </table>
+	<div><input type="submit" value="Save" /></div>
+	</form>
+  </div>
+  

@@ -1,0 +1,9 @@
+{{ attach_library('fgmc_forms/fgmc_forms_custom_css') }}
+<h2>{{  title }}</h2>
+{% if data.is_permission == 1 %}
+<div style="text-align:right;width:100%;"><a href="{{data.baseURL}}/admin/sethomepagepanel"><img src="{{data.baseURL}}/core/themes/stable/images/core/icons/787878/wrench.svg"></img>Configure Page</a></div>
+{% endif %}
+<div>
+{{ data.blocks_info }}
+<div class="clearfix"></div>
+</div>

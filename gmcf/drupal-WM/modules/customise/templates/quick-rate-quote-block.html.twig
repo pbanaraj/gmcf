@@ -1,0 +1,126 @@
+{{ attach_library('customise/quick_rate') }}
+<input type="hidden" id="loan_prds" value="{{block_data.loan_prod|json_encode}}" />
+<input type="hidden" name="qrq_property_type"  />
+<input type="hidden" name="qrq_occupency_type" />
+
+<div id="menu12">
+    <a href="javascript:void(0)" class="quick-rate-btn">Quick Rate Quote <span class="glyphicon glyphicon-plus"></span> </a>
+    <div id="quick-rate" class="qrq-home">
+            <div class="row">
+                    <div class="col-md-12">
+                            <ul class="nav nav-tabs">
+                                    <li class="active"><a data-toggle="tab" href="#purchase">Purchase</a></li>
+                                    <li><a data-toggle="tab" href="#refinance">Refinance</a></li>
+                            </ul>
+							<input type="hidden" id="type_form" value="home" />
+                            <div class="tab-content">
+                                    <div id="purchase" class="tab-pane fade in active">
+                                            <form class="form" role="form" method="POST" action="{{path('customise.quick_rate_submit')}}" id="quick_rate_form">
+                                                    <div class="form-group">
+                                                            <input type="text" class="form-control" id="qrq_purchase_price" name="qrq_purchase_price" placeholder="Purchase Price" maxlength="12" onkeypress="return isNumber(event)">
+                                                    </div>
+                                                    <div class="form-group">
+                                                            <input type="text" class="form-control" id="qrq_down_payment" name="qrq_down_payment" placeholder="Down Payment" maxlength="12" onkeypress="return isNumber(event)">
+                                                    </div>
+                                                    <div class="form-group">
+                                                            <input type="text" class="form-control" id="qrq_zipcode" name="qrq_zipcode" placeholder="Zip Code" maxlength="5" onkeypress="return isNumber(event)">
+                                                               <input type="hidden" class="form-control ignore valid qrq_city" id="qrq_city"   name="qrq_city"   value="" maxlength="50" >
+                                                                        <input type="hidden" class="form-control ignore valid qrq_state" id="qrq_state" name="qrq_state"  value="" maxlength="10" >
+                                                    </div>
+                                                    <div class="form-group">
+                                                           <select class="form-control" name="qrq_credit_score">
+															<option value="">Credit Score</option>
+															{% for key_crd, val_crd in block_data.credit_scores %}										
+																<option value="{{key_crd}}">{{val_crd}}</option>
+															{% endfor %}
+															</select>
+                                                    </div>
+                                                    <div class="form-group multiSelect">
+                                                            <select class="form-control select_loan_products" name="qrq_loan_product[]" multiple="multiple">														
+															{% for key_prd, val_prd in block_data.loan_products %}										
+																<option value="{{key_prd}}">{{val_prd}}</option>
+															{% endfor %}
+															</select>
+															<input type="hidden" name="qrq_loan_product_hidden" value="" />
+                                                    </div>
+                                                    <div class="checkbox">
+                                                            <label>
+                                                                    <input type="checkbox" name="qrq_is_military"> Military / Veteran?
+                                                            </label>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="form-group">
+                                                            <input type="text" class="form-control" id="qrq_customer_name" name="qrq_customer_firstname" placeholder="First Name" maxlength="50" onkeypress="return onlyAlphabets(event)">
+                                                    </div>
+                                                    <div class="form-group">
+									<input type="text" class="form-control ignore" id="qrq_customer_lastname" name="qrq_customer_lastname" placeholder="Last Name" maxlength="50" onkeypress="return onlyAlphabets(event)">
+                                                    </div>
+                                                    <div class="form-group">
+                                                            <input type="text" class="form-control" id="qrq_customer_phone" name="qrq_customer_phone" placeholder="Phone" maxlength="14">
+                                                    </div>
+                                                    <div class="form-group">
+                                                            <input type="text" class="form-control" id="qrq_customer_email" name="qrq_customer_email" placeholder="Email" maxlength="255">
+                                                    </div>
+                                                    <div class="form-group text-center">
+                                                            <button type="submit" class="btn btn-success" id="show_quote_submit">Show Quote</button>
+                                                    </div>
+                                            </form>
+                                    </div>
+                                    <div id="refinance" class="tab-pane fade">
+                                            <form class="form" role="form" method="POST" action="{{path('customise.quick_rate_submit')}}" id="quick_rate_ref_form">
+                                                    <div class="form-group">
+                                                            <input type="text" class="form-control" id="qrq_home_value" name="qrq_home_value" placeholder="Home Value" maxlength="12" onkeypress="return isNumber(event)">
+                                                    </div>
+                                                    <div class="form-group">
+                                                            <input type="text" class="form-control" id="qrq_current_balance" name="qrq_current_balance" placeholder="Current Balance" maxlength="12" onkeypress="return isNumber(event)">
+                                                    </div>
+                                                    <div class="form-group">
+                                                            <input type="text" class="form-control" id="qrq_zipcode" name="qrq_zipcode" placeholder="Zip Code" maxlength="5" onkeypress="return isNumber(event)">
+                                                               <input type="hidden" class="form-control ignore valid qrq_city" id="qrq_city"   name="qrq_city"   value="" maxlength="50" >
+                                                                        <input type="hidden" class="form-control ignore valid qrq_state" id="qrq_state"  name="qrq_state"  value="" maxlength="10" >
+                                                    </div>
+                                                    <div class="form-group">
+                                                            <select class="form-control" name="qrq_credit_score">
+															<option value="">Credit Score</option>
+															{% for key_crd, val_crd in block_data.credit_scores %}										
+																<option value="{{key_crd}}">{{val_crd}}</option>
+															{% endfor %}
+															</select>
+                                                    </div>
+                                                    <div class="form-group multiSelect">
+                                                            <select class="form-control select_loan_products" name="qrq_loan_product[]" multiple="multiple">															
+															{% for key_prd, val_prd in block_data.loan_products %}										
+																<option value="{{key_prd}}">{{val_prd}}</option>
+															{% endfor %}
+															</select>
+															<input type="hidden" name="qrq_loan_product_hidden" value="" />
+                                                    </div>
+                                                    <div class="checkbox">
+                                                            <label>
+                                                                    <input type="checkbox" name="qrq_is_military"> Military / Veteran?
+                                                            </label>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="form-group">
+                                                            <input type="text" class="form-control" id="qrq_customer_name" name="qrq_customer_firstname" placeholder="First Name" maxlength="50" onkeypress="return onlyAlphabets(event)">
+                                                    </div>
+                                                    <div class="form-group">
+									<input type="text" class="form-control ignore" id="qrq_customer_lastname" name="qrq_customer_lastname" placeholder="Last Name" maxlength="50" onkeypress="return onlyAlphabets(event)">
+                                                    </div>
+                                                    <div class="form-group">
+                                                            <input type="text" class="form-control" id="qrq_customer_phone_ref" name="qrq_customer_phone" placeholder="Phone" maxlength="14">
+                                                    </div>
+                                                    <div class="form-group">
+                                                            <input type="text" class="form-control" id="qrq_customer_email" name="qrq_customer_email" placeholder="Email" maxlength="255">
+                                                    </div>
+                                                    <div class="form-group text-center">
+                                                            <button type="submit" class="btn btn-success" id="show_quote_ref_submit">Show Quote</button>
+                                                    </div>
+                                            </form>
+                                    </div>
+                            </div>
+
+                    </div>
+            </div>
+    </div>
+</div>

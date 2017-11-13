@@ -1,0 +1,274 @@
+		{{ attach_library('customise/quick_rate') }} 
+		<section class="section-0 container" id="quick_rate_landing_default">
+			<div class="row ">
+				<div class="col-lg-3  col-md-4">
+				<div id="quick-rates" class="rate-quote">
+					<h3 class="rate-quote-title text-center">Quick Rate Quote </h3>
+					<ul class="nav nav-tabs text-center">
+						<li class="active"><a data-toggle="tab" href="#purchase">Purchase</a></li>
+						<li><a data-toggle="tab" href="#refinance">Refinance</a></li>
+					</ul>
+					<input type="hidden" id="loanTermsConfig" value="{{name.loan_terms|json_encode()}}" />
+					<input type="hidden" id="type_form" value="qrq" />
+					<input type="hidden" id="rates_data" value="{{name.quick_rates|json_encode()}}" />
+					<div class="tab-content">
+						<div id="purchase" class="tab-pane fade in active">
+							<form class="form" role="form" method="POST" action="{{path('customise.quick_rate_submit')}}" id="quick_rate_form">
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_purchase_price" name="qrq_purchase_price" placeholder="Purchase Price" maxlength="12" onkeypress="return isNumber(event)">
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_down_payment" name="qrq_down_payment" placeholder="Down Payment" maxlength="12" onkeypress="return isNumber(event)">
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_zipcode" name="qrq_zipcode" placeholder="Zip Code" maxlength="5" onkeypress="return isNumber(event)">
+								        <input type="hidden" class="form-control ignore valid qrq_city" id="qrq_city" name="qrq_city"   value="" maxlength="50" >
+                                                                        <input type="hidden" class="form-control ignore valid qrq_state" id="qrq_state" name="qrq_state"  value="" maxlength="10" >
+                                                                </div>
+								<div class="form-group">
+									<select class="form-control" name="qrq_credit_score">
+										<option value="">Credit Score</option>
+										{% for key_crd, val_crd in name.credit_scores %}										
+											<option value="{{key_crd}}">{{val_crd}}</option>
+										{% endfor %}
+									</select>
+								</div>
+								<div class="form-group multiSelect">
+									<select class="form-control select_loan_products" name="qrq_loan_product[]" multiple="multiple">										
+										{% for key_prd, val_prd in name.loan_products %}										
+											<option value="{{key_prd}}">{{val_prd}}</option>
+										{% endfor %}
+									</select>
+									<input type="hidden" name="qrq_loan_product_hidden" value="" />
+								</div>
+								<div class="checkbox">
+									<label>
+											<input type="checkbox" name="qrq_is_military"> Military / Veteran?
+										</label>
+								</div>
+								<hr>
+								<div class="form-group">
+									<input type="text" class="form-control ignore" id="qrq_customer_firstname" name="qrq_customer_firstname" placeholder="First Name" maxlength="50" onkeypress="return onlyAlphabets(event)">
+								</div>
+                                                                
+                                                                <div class="form-group">
+									<input type="text" class="form-control ignore" id="qrq_customer_lastname" name="qrq_customer_lastname" placeholder="Last Name" maxlength="50" onkeypress="return onlyAlphabets(event)">
+								</div>
+                                                                
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_customer_phone" name="qrq_customer_phone" placeholder="Phone" maxlength="14">
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_customer_email" name="qrq_customer_email" placeholder="Email" maxlength="255" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}">
+								</div>
+								<div class="accordion">
+									<div class="accordion-head">
+										<h4><i> Advance</i> <span class="arrow down"></span></h4>
+									</div>
+									<div class="accordion-body">
+										<div class="form-group">
+											<select class="form-control" name="qrq_property_type">
+												<option value="">Property Type</option>
+												{% for key_prt, val_prt in name.property_types %}										
+													<option value="{{key_prt}}">{{val_prt}}</option>
+												{% endfor %}
+											</select>
+										</div>
+										<div class="form-group">
+											<select class="form-control" name="qrq_occupency_type">
+												<option value="">Occupancy</option>
+												{% for key_oct, val_oct in name.occupency_types %}										
+													<option value="{{key_oct}}">{{val_oct}}</option>
+												{% endfor %}
+											</select>
+										</div>
+										<div class="form-group">
+											<!--
+											<div class="row">
+												<div class="col-xs-10">
+													<input type="text" class="form-control" id="exampleInputPassword2" placeholder="Cash Out" maxlength="12" onkeypress="return isNumber(event)">
+												</div>
+												<div class="col-xs-2"><img src="/themes/basis/images/info.png" alt=""> </div>
+											</div>
+											-->
+										</div>
+										<div class="checkbox">
+											<label>
+												<input type="checkbox" name="qrq_lender_credit"> Lender Credit <a href="#" data-toggle="tooltip" data-placement="top" title="Lender credits may lower your up front closing costs and are typically given in exchange for a higher interest rate"><img src="/themes/basis/images/info.png" alt=""></a> 
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group text-center">
+									<button type="submit" class="btn btn-success" id="show_quote_submit">Show Quote</button>
+								</div>
+							</form>
+						</div>
+						<div id="refinance" class="tab-pane fade">
+							<form class="form" role="form" method="POST" action="{{path('customise.quick_rate_submit')}}" id="quick_rate_ref_form">
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_home_value" name="qrq_home_value" placeholder="Home Value" maxlength="12" onkeypress="return isNumber(event)">
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_current_balance" name="qrq_current_balance" placeholder="Current Balance" maxlength="12" onkeypress="return isNumber(event)">
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_zipcode" name="qrq_zipcode" placeholder="Zip Code" maxlength="5" onkeypress="return isNumber(event)">
+                                                                        
+                                                                        <input type="hidden" class="form-control ignore valid qrq_city" id="qrq_city"    name="qrq_city"   value="" maxlength="50" >
+                                                                        <input type="hidden" class="form-control ignore valid qrq_state" id="qrq_state"  name="qrq_state"  value="" maxlength="10" >
+                                                                
+                                                                        
+								</div>
+								<div class="form-group">
+									<select class="form-control" name="qrq_credit_score">
+										<option value="">Credit Score</option>
+										{% for key_crd, val_crd in name.credit_scores %}										
+											<option value="{{key_crd}}">{{val_crd}}</option>
+										{% endfor %}
+									</select>
+								</div>
+								<div class="form-group multiSelect">
+									<select class="form-control select_loan_products" name="qrq_loan_product[]" multiple="multiple">
+										{% for key_prd, val_prd in name.loan_products %}										
+											<option value="{{key_prd}}">{{val_prd}}</option>
+										{% endfor %}
+									</select>
+									<input type="hidden" name="qrq_loan_product_hidden" value="" />
+								</div>
+								<div class="checkbox">
+									<label>
+											<input type="checkbox" name="qrq_is_military"> Military / Veteran?
+										</label>
+								</div>
+								<hr>
+								<div class="form-group">
+									<input type="text" class="form-control ignore" id="qrq_customer_firstname" name="qrq_customer_firstname" placeholder="First Name" maxlength="50" onkeypress="return onlyAlphabets(event)">
+								</div>
+                                                                
+                                                                <div class="form-group">
+									<input type="text" class="form-control ignore" id="qrq_customer_lastname" name="qrq_customer_lastname" placeholder="Last Name" maxlength="50" onkeypress="return onlyAlphabets(event)">
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_customer_phone_ref" name="qrq_customer_phone" placeholder="Phone" maxlength="14">
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="qrq_customer_email" name="qrq_customer_email" placeholder="Email" maxlength="255" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}">
+								</div>
+								<div class="accordion">
+									<div class="accordion-head">
+										<h4><i> Advance</i> <span class="arrow down"></span></h4>
+									</div>
+									<div class="accordion-body">
+										<div class="form-group">
+											<select class="form-control" name="qrq_property_type">
+												<option value="">Property Type</option>
+												{% for key_prt, val_prt in name.property_types %}										
+													<option value="{{key_prt}}">{{val_prt}}</option>
+												{% endfor %}
+											</select>
+										</div>
+										<div class="form-group">
+											<select class="form-control" name="qrq_occupency_type">
+												<option value="">Occupancy</option>
+												{% for key_oct, val_oct in name.occupency_types %}										
+													<option value="{{key_oct}}">{{val_oct}}</option>
+												{% endfor %}
+											</select>
+										</div>
+										<div class="form-group">
+											<div class="row">
+												<div class="col-xs-10">
+													<input type="text" class="form-control" id="exampleInputPassword2" placeholder="Cash Out" name="qrq_cash_out" maxlength="12" onkeypress="return isNumber(event)">
+												</div>
+												<div class="col-xs-2"><a href="#" data-toggle="tooltip" data-placement="top" title="With a cashout refinance you can access cash from the equity in your home to pay down debt or make additional purchases.  Note that the interest rate may be higher on a cash-out refinance than on a standard rate-and-term refinance."><img src="/themes/basis/images/info.png" alt=""></a> </div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group text-center">
+									<button type="submit" class="btn btn-success" id="show_quote_ref_submit">Show Quote</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				</div>
+				<div class="col-lg-9 col-md-8 qr_search_results">
+                                    {% if name.rates | length ==0 %}
+                                      <h4 class="no-data text-center">There are no results for the values you entered, please try again</h4>
+                                      {% else %}
+					<div class="col-sm-12 marT25">
+						<h4 class="success_msg">{{name.success_msg.default_success | raw}}</h4>
+						<div class="row">
+							<div class="form-group">
+								<div class="pull-right">
+									<select class="form-control filter sortRates">
+										<option value="LMP">Lowest Monthly payment</option>
+										<option value="LR">Lowest Rate</option>
+										<option value="LF">Lowest Costs</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="accordion qrq_accordion" id="quick_rate_result">
+							{% set i=0 %}
+							{% for key,rate in name.rates %}
+							{% set replace = ' ' %}
+							{% set replace_with = '_' %} 
+
+							{% set newkey = key|replace({ (replace): replace_with }) %}
+							{% if i==0 %}
+							{% set openclass = "open" %}
+							{% set openactive = "openactive" %}
+							{% else %}
+							{% set openclass = "" %}
+							{% set openactive = "" %}
+							{% endif %}
+							<div class="accordion-head {{openclass}}">
+								<h4>{{ key }}</h4><span class="active-text">OUR TOP PICK<span class="active-header"> </span></span>
+								<div class="arrow down"></div>
+
+							</div>
+							<div class="accordion-body {{openactive}}">
+								<div class="table-responsive">
+									<table class="table">
+										<thead>
+											<tr>
+												{% for key, val_qrq in name.result %}
+													<th>{{val_qrq.label}}
+													{% if val_qrq.help_text is not empty %}
+														<a href="#" data-toggle="tooltip" data-placement="top" title="{{val_qrq.help_text}}"><i class="fa fa-info-circle" aria-hidden="true"></i></a>														
+													{% endif %}
+													</th>
+												{% endfor %}												
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+										{% for key1,rate1 in rate %}										
+											<tr>
+												<td data-title="{{name.result.0.label}}">{{rate1.Rate}}%</td>
+												<td data-title="{{name.result.1.label}}">{{rate1.APR}}%</td>
+												<td data-title="{{name.result.2.label}}">${{rate1.MonthlyPayment}}</td>
+												<td data-title="{{name.result.3.label}}">${{rate1.credit}}<span class="small-txt">@ {{rate1.points}} points</span></td>
+												<td data-title="{{name.result.4.label}}">${{rate1.TotalFees}}</td>
+												<td class="text-center" rate="{{rate1.Rate}}" apr="{{rate1.APR}}" monthlypayment="{{rate1.MonthlyPayment}}" points="{{rate1.points}}" credit="{{rate1.credit}}" totalfees="{{rate1.TotalFees}}"><a class="select-rate" href="javascript:void(0)">Select Rate</a></td>
+											</tr>
+										{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+							{% set i= i+1 %}
+							{% endfor %}
+						</div>
+					</div>
+                                      {% endif %}
+				</div>
+
+			</div>
+
+
+		</section>
+		{{ attach_library('customise/product-slider') }} 

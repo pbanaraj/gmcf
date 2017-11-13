@@ -1,0 +1,28 @@
+<section class="section-5 container">
+    <h4 class="text-center">{{block_data.block_title | raw}} </h4>
+    <div class="text-center font-md paddB10">{{block_data.block_desc | raw}}</div>
+	<div class="loader_products"><img src="/themes/basis/images/bx_loader.gif" /></div>
+	<ul class="bxslider" style="display:none;">
+		{% for key, prod in block_data.products %}
+			<li>
+						<div class="col-item">
+								<div class="header text-center">{{prod.title}}</div>
+								<div class="desc">{{prod.product_short_desc|raw}}</div>
+								{% if block_data.preview_req == true %}
+									<div class="text-center footer"><button class="btn btn-success">Details</button></div>
+								{% else %}
+									<div class="text-center footer"><button class="btn btn-success" onclick="location.href='{{prod.product_url}}'">Details</button></div>
+								{% endif %}
+						</div>
+				</li>
+		{% endfor %}
+	</ul>
+    <div class="text-center paddTB15 marT50">
+		{% if block_data.preview_req == true %}
+		<button class="btn btn-success">See All Options</button>
+		{% else %}
+            <button class="btn btn-success" onclick="location.href='{{block_data.all_product_url}}'">See All Options</button>
+		{% endif %}
+    </div>
+</section>
+{{ attach_library('customise/product-slider') }} 

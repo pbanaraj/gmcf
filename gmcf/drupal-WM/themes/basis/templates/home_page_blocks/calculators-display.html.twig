@@ -1,0 +1,68 @@
+{#
+/**
+ * Available variables
+ * 
+ * items - to access nodes item.content['#node']
+ * parentNode
+ * columns
+ */
+#}
+{# NOTE: THIS TEMPLATE IS NOT IN USE FOR CALCULATORS DISPLAY TYPE. INSTEAD THIS TEMPLATE IS DIVIDED INTO field--field-block-related-calculators.html.twig and field--field-block-related-markkup.html.twig #}
+{% set itemsPerRowClass = 'col-lg-6' %}
+
+{#API call data#}
+{% set data_rates = get_mi_rates() %}
+
+{% if columns == 1 %}
+  {% set itemsPerRowClass = 'col-lg-12' %}
+{% elseif columns == 3 %}
+  {% set itemsPerRowClass = 'col-lg-4' %}
+{% elseif columns == 4 %}
+  {% set itemsPerRowClass = 'col-lg-3' %}
+{% endif %}
+
+    {% if twig_display == 'markup' %}
+        <div data-wow-delay="1s" data-wow-duration="2s" class="col-lg-5 lightPink wow fadeIn" style="height: 320px;">
+        {% for item in items %}
+
+          {#node#}
+          {% set node = item.content['#node'] %}
+
+          {% if node.bundle() == 'markup' %}
+            {{node.body.value|raw}}
+          {% endif %}
+
+        {% endfor %}
+        </div>
+    {% endif %}
+    {% if twig_display == 'content' %}
+        <div data-wow-delay="1.5s" data-wow-duration="2s" class="col-lg-7 lightPink wow fadeIn" style="height: 320px;">
+            <div class="row">
+              {% for item in items %}
+
+                {#node#}
+                {% set node = item.content['#node'] %}
+
+                {% if node.bundle() == 'calculators' %}
+                  <div class="{{itemsPerRowClass}}">
+                    {#Internal calculators Path#}
+                    {% set internal_path = '' %}
+                    {% if node.field_linked_calculator_page is not empty %}
+                      {% set internal_path = get_internal_path_from_uri(node.field_linked_calculator_page.uri) %}
+                    {% endif %}
+                    <div class="col">
+                      <div class="row">
+                        <div class="col-lg-9">{{node.title.value}}</div>
+                        <div class="col-lg-3">
+                          <a href="{{internal_path}}" target="_blank">
+                            <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+        </div>
+    {% endif %}

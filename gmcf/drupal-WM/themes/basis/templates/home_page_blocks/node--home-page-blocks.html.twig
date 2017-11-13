@@ -1,0 +1,31 @@
+{%
+  set classes = [
+    node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+
+{#Attach Library#}
+{{ attach_library('customise/product-slider') }} 
+
+{# Keep below <div{{ attributes.addClass(classes) }}> and {{ title_suffix }} for contextual links #}
+
+<div{{ attributes.addClass(classes) }}>
+  
+  {{ title_suffix }}
+  
+  {% set node_class = node.hasField('field_block_css_class') ? node.get('field_block_css_class').value : '' %}
+  {% set classes = node_class|split(' ') %}
+  {% set no_of_classes = classes | length %}
+  {% set displayType = node.hasField('field_block_display_type') ? node.get('field_block_display_type').value : '' %}
+  <section class="{{node_class}}">
+    <div class="container" id="{{ classes[no_of_classes-1] }}">
+	  {{ content }}
+    </div>
+  </section>
+    
+</div>

@@ -1,0 +1,5 @@
+services:
+  fgmc_homepage.twig.TwigExtension:
+    class: Drupal\fgmc_homepage\FGMCHomePageTwigExtension
+    tags:
+      - {name: twig.extension}

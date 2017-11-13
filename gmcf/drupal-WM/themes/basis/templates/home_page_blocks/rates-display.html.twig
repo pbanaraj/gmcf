@@ -1,0 +1,59 @@
+{#
+/**
+ * Available variables
+ * 
+ * items - to access nodes item.content['#node']
+ * parentNode
+ * columns
+ */
+
+#}
+
+{#Rates display start#}
+
+{# API call data #}
+{% set data_rates = get_mi_rates() %}
+
+<div class="row" id="mirates">
+    <div class="loader_homepage_rates">
+       <img src="/themes/basis/images/bx_loader.gif">
+    </div>
+</div>
+{#Rates display end#}
+
+{#Terms and disclosures Modal start#} 
+{% set title = '' %}
+{% set body = '' %}
+{% set node_js = '' %}
+
+{% for item in items %}
+  {#node#}
+  {% set node = item.content['#node'] %}
+  {% if node.bundle() == 'basic_page' %}
+    {% set title = node.title.value %}
+    {% set node_js = (node.hasField('field_node_js')) ? node.field_node_js.value : '' %}
+    {% set body = (node.hasField('body')) ? node.body.value : '' %}
+  {% endif %}
+{% endfor %}
+{{ attach_library('fgmc_homepage/fgmc_homepage.rates') }}
+{{ attach_js_variables('fgmc_homepage','nodeid',node.id) }}
+
+<div class="modal fade in" id="myModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content terms">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          x
+        </button>
+        <h4 id="termAndDisTitle">{{title}}</h4>
+      </div>
+      <div class="modal-body" id="termAndDisBody">
+        <div class="loader_homepage_rates">
+            <img src="/themes/basis/images/bx_loader.gif">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{#Terms and disclosures Modal end#}

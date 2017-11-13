@@ -1,0 +1,21 @@
+<ul class="bxslider-social-testimonial" style="display:none;">
+  {% for item in items %}
+    {#node#}
+    {% set node = item.content['#node'] %}
+
+    {% if node.bundle() == 'testimonials' %}
+
+
+      <li>
+        <div class="col-sm-8">
+          "&nbsp;{{node.body.value | raw}}&nbsp;"
+        </div>
+        <div class="col-sm-4 cus_name">
+          - {{node.field_customer_name.value}}, <br> Customer since {{node.field_customer_since.value}}
+        </div>
+      </li>
+
+
+    {% endif %}
+  {% endfor %}
+</ul>

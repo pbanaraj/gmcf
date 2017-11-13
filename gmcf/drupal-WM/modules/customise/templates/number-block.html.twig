@@ -1,0 +1,37 @@
+<section class="section-1 row">
+<div class="container">
+    <div class="row">
+            <div class="col-lg-5 lightPink wow fadeIn">
+                    <h4>{{block_data.title | raw}}</h4>
+                    <p>{{block_data.description | raw}}</p>
+                    <div>
+                            <button type="button" class="btn btn-success" onclick="location.href='/calculators'">
+                                            Show me the money
+                                    </button>
+                    </div>
+            </div>
+            <div class="col-lg-7 lightPink wow fadeIn">
+					{% if block_data.calculators %}
+						<div class="row">						
+						{% for key, calc in block_data.calculators %}													
+							<div class="col-lg-6 col-sm-10 col-md-4 num-block">
+								<div class="col">
+									<div class="row">
+										<div class="col-md-9">{{calc.title}}</div>
+										{% if (block_data.preview_req == true or calc.linked_calc_page is empty) %}
+										<div class="col-md-3 borderT"><i class="fa fa-angle-right" aria-hidden="true"></i> </div>
+										{% else %}
+										<div class="col-md-3 borderT"><a href="{{calc.linked_calc_page}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a> </div>
+										{% endif %}
+									</div>
+
+								</div>
+							</div>							
+						{% endfor %}
+						</div>
+					{% else %}
+					{% endif %}
+            </div>
+    </div>
+    </div>
+</section>

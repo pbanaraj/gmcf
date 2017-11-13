@@ -1,0 +1,25 @@
+
+preview.page_preview_getPagePreview:
+  path: '/preview/draft'
+  defaults:
+    _controller: '\Drupal\preview\Controller\pagePreview::getHomePagePreview'
+    _title: 'Home Page Preview'
+  requirements:
+    _permission: 'access content'
+    
+preview.page_preview_getPagePreview_review:
+  path: '/preview/draft/review'
+  defaults:
+    _controller: '\Drupal\preview\Controller\pagePreview::getHomePagePreview'
+    _title: 'Controller for page preview'
+  requirements:
+    _permission: 'access content'
+preview.page_preview_products:
+  path: '/preview/products'
+  defaults:
+    _controller: '\Drupal\preview\Controller\pagePreview::getProductsPagePreview'
+    _title: 'Products Page Preview'
+  options:
+     no_cache: TRUE
+  requirements:
+    _permission: 'access content'

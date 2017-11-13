@@ -1,0 +1,19 @@
+{# Default Values #}
+{% set displayType = node.hasField('field_block_display_type') ? node.get('field_block_display_type').value : '' %}
+{% set columns =  node.hasField('field_number_of_columns_per_row') ? node.get('field_number_of_columns_per_row').value : '' %}
+
+{% set passVars = {'items': items, 'parentNode' : node, 'columns' : columns, 'twig_display' : 'content'} %}
+
+{% if (displayType == 'our_goal') %}
+  {% include '@basis/home_page_blocks/our-goal-display.html.twig' with passVars %}
+{% elseif (displayType == 'let_us_help') %}
+  {% include '@basis/home_page_blocks/let-us-help-display.html.twig' with passVars %}
+{% elseif (displayType == 'rates') %}
+  {% include '@basis/home_page_blocks/rates-display.html.twig' with passVars %}
+{% elseif (displayType == 'calculators') %}
+  {% include '@basis/home_page_blocks/calculators-display.html.twig' with passVars %}
+{% elseif (displayType == 'career') %}
+  {% include '@basis/home_page_blocks/career-display.html.twig' with passVars %}
+{% elseif (displayType == 'rates_and_terms') %}
+  {% include '@basis/home_page_blocks/rates-and-terms-and-fees-display.html.twig' with passVars %}
+{% endif %}

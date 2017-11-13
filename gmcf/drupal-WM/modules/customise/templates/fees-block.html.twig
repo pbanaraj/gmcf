@@ -1,0 +1,60 @@
+<section class="section-2 container">
+        <h4 class="text-center">{{block_data.title|raw}}</h4>
+        <div class="text-center font-md">{{block_data.description|raw}}</div>
+        <div class="row">
+		{% for key, rate in block_data.data_rates %}
+                <div class="col-md-4">
+                        <div class="rate-col">
+                                <div class="header text-center">
+                                        {{key|replace({ ('_'): ' '})}}
+                                </div>
+                                <div class="row">
+                                        <div class="col-sm-6 col-xs-6 skyTx">
+                                             <span class="rate-heading">   Interest Rate </span>
+                                        <span class="font-md">
+                                                {{rate.rates.key_data.Rate}}%
+                                        </span>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-6 skyTx">
+                                             <span class="rate-heading2">APR</span>
+                                        <span class="font-md">
+                                                {{rate.rates.key_data.APR}}%
+                                        </span>
+										
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+		{% endfor %}
+         </div>
+        <div class="paddTB15">
+               <span>Rates as of {{block_data.time}} (EST) on {{block_data.date}}</span> <a data-toggle="modal" href="#myModal" class="skyTx terms-btn pull-right {{block_data.class}}">Terms & Disclosures</a>
+        </div>
+        <div class="text-center">
+				{% if block_data.preview_req == true %}
+                <button class="btn btn-success ">Check today's low rates</button>
+				{% else %}
+				<button class="btn btn-success " onclick="location.href='{{block_data.seeall_rates_url}}'">Check today's low rates</button>
+				{% endif %}
+        </div>
+</section>
+		<!-- modal1-->
+		<div class="modal fade in" id="myModal" role="dialog">
+			<div class="modal-dialog modal-lg">
+
+				<!-- Modal content-->
+				<div class="modal-content terms">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+								x
+							</button>
+						<h4>Terms & Disclosures</h4>
+					</div>
+					<div class="modal-body">
+						{{block_data.tandd_content | raw}}
+					</div>
+
+				
+				</div>
+			</div>
+		</div>

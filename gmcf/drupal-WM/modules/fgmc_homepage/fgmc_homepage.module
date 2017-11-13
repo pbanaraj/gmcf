@@ -1,0 +1,225 @@
+<?php
+
+/**
+ * @file
+ * Contains fgmc_homepage.module..
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function fgmc_homepage_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the fgmc_homepage module.
+    case 'help.page.fgmc_homepage':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Manages Home Page Content - Example Home Page Blocks, SEO Elements') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+
+/**
+ * Implements hook_form_node_form_alter().
+ */
+function fgmc_homepage_form_node_form_alter(&$form, \Drupal\Core\Form\FormStateInterface &$form_state, $form_id) {
+  
+  //Home Page Drop Down Controls
+  $home_page_forms = array (
+    'node_basic_page_form',
+    'node_basic_page_edit_form',
+  );
+  if (in_array($form_id, $home_page_forms)) {
+    $form['field_home_page_blocks']['#states'] = array(
+      'visible' => array(
+        ':input[name="field_ctype"]' => array('value' => 'home_page_blocks'),
+      ),
+    );
+    $form['field_home_page_banners']['#states'] = array(
+      'visible' => array(
+        ':input[name="field_ctype"]' => array('value' => 'home_page_blocks'),
+      ),
+    );
+    $form['body']['#states'] = array(
+      'invisible' => array(
+        ':input[name="field_ctype"]' => array('value' => 'home_page_blocks'),
+      ),
+    );
+    $form['field_node_css']['#states'] = array(
+      'invisible' => array(
+        ':input[name="field_ctype"]' => array('value' => 'home_page_blocks'),
+      ),
+    );
+    $form['field_node_js']['#states'] = array(
+      'invisible' => array(
+        ':input[name="field_ctype"]' => array('value' => 'home_page_blocks'),
+      ),
+    );
+  }
+  
+  //Styling Home Page Blocks
+  $home_page_blocks_forms = array (
+    'node_home_page_blocks_form',
+    'node_home_page_blocks_edit_form',
+  );
+  if (in_array($form_id, $home_page_blocks_forms) && (isset($form['field_block_css_class']) 
+                                      || isset($form['field_block_display_type']) 
+                                      || isset($form['field_number_of_columns_per_row']))) {
+    //Display Controls advanced group
+    $form['display_controls_group'] = array(
+      '#type' => 'details',
+      '#title' => t('Block Display Controls'),
+      '#description' => t(''),
+      '#group' => 'advanced',
+      '#open' => TRUE,
+      '#access' => TRUE,
+      '#attributes' => array('class' => array('display-controls-group')),
+    );
+    //Attach Fields to SEO Group Element
+    $form['field_block_css_class']['#group'] = 'display_controls_group';
+    $form['field_block_display_type']['#group'] = 'display_controls_group';
+    $form['field_number_of_columns_per_row']['#group'] = 'display_controls_group';
+
+    //states change for markup field.
+    $form['field_block_related_markup']['#states'] = array(
+      'visible' => array(
+        array(
+          array(':input[name="field_block_display_type"]' => array('value' => 'calculators')),
+          'or',
+          array(':input[name="field_block_display_type"]' => array('value' => 'let_us_help')),
+        ),
+      ),
+    );
+    //states change for calculator entity reference field.
+    $form['field_block_related_calculators']['#states'] = array(
+      'visible' => array(
+        ':input[name="field_block_display_type"]' => array('value' => 'calculators'),
+      ),
+    );
+    //states change for products entity reference field.
+    $form['field_block_related_products']['#states'] = array(
+      'visible' => array(
+        ':input[name="field_block_display_type"]' => array('value' => 'rates_and_terms'),
+      ),
+    );
+    //states change for why us entity reference field.
+    $form['field_block_related_why_us']['#states'] = array(
+      'visible' => array(
+        ':input[name="field_block_display_type"]' => array('value' => 'our_goal'),
+      ),
+    );
+    //states change for let us help  video field
+    $form['field_block_related_video']['#states'] = array(
+      'visible' => array(
+        ':input[name="field_block_display_type"]' => array('value' => 'let_us_help'),
+      ),
+    );
+    //states change for block content entity reference field.
+    $form['field_block_related_content']['#states'] = array(
+      'invisible' => array(
+        array(
+            array(':input[name="field_block_display_type"]' => array('value' => 'calculators')),
+            'or',
+            array(':input[name="field_block_display_type"]' => array('value' => 'rates_and_terms')),
+            'or',
+            array(':input[name="field_block_display_type"]' => array('value' => 'our_goal')),
+            'or',
+            array(':input[name="field_block_display_type"]' => array('value' => 'career')),
+            'or',
+            array(':input[name="field_block_display_type"]' => array('value' => 'let_us_help')),
+        ),
+      ),
+    );
+    $form['body']['#states'] = array(
+      'invisible' => array(
+        array(
+           array(':input[name="field_block_display_type"]' => array('value' => 'calculators')),
+           'or',
+           array(':input[name="field_block_display_type"]' => array('value' => 'let_us_help')),
+        ),
+      ),
+    );
+    $form['field_footer']['#states'] = array(
+      'invisible' => array(
+        array(
+           // array(':input[name="field_block_display_type"]' => array('value' => 'rates')),
+           // 'or',
+            array(':input[name="field_block_display_type"]' => array('value' => 'calculators')),
+            //'or',
+           // array(':input[name="field_block_display_type"]' => array('value' => 'our_goal')),
+            //'or',
+           // array(':input[name="field_block_display_type"]' => array('value' => 'rates_and_terms')),
+           'or',
+            array(':input[name="field_block_display_type"]' => array('value' => 'let_us_help')),
+            'or',
+            array(':input[name="field_block_display_type"]' => array('value' => 'career')),
+      ),
+      ),
+    );
+
+    if($form_id == "node_home_page_blocks_edit_form" && $form['field_block_display_type']['widget']['#default_value'][0] == 'rates') {
+        $form['field_block_related_content']['widget']['#title'] = 'Terms & Disclosures';
+    }
+
+    if($form_id == "node_home_page_blocks_edit_form") {
+        $form['field_block_display_type']['widget']['#attributes']= array('disabled'=>TRUE);
+    }
+    // attaching the custom form validate function to avoid duplicate entity references.
+    $form['#validate'][] = 'fgmc_homepage_validate_page_blocks';
+  }
+}
+
+
+function fgmc_homepage_validate_page_blocks(&$form,  \Drupal\Core\Form\FormStateInterface $form_state) {
+
+  $display_type = $form_state->getValue('field_block_display_type')[0]['value'];
+  $field = getFieldForDisplayType($display_type);
+  $fieldvalues = $form_state->getValue($field);
+  $target_id_array = array();
+  foreach($fieldvalues as $fieldvalue) {
+    if(is_array($fieldvalue)) {
+        if(!in_array($fieldvalue['target_id'],$target_id_array)){
+            array_push($target_id_array, $fieldvalue['target_id']);
+        }elseif(isset($fieldvalue['target_id'])){
+            $childnode  = \Drupal::entityTypeManager()->getStorage('node')->load($fieldvalue['target_id']);
+            $error_message = 'The value "'.$childnode->getTitle().' ('.$childnode->Id().')" already exists. Please try not to repeate the values.';
+            $form_state->setErrorByName($field,$error_message);
+        }
+    }
+  }
+}
+
+function getFieldForDisplayType($display_type){
+   $field = 'field_block_related_content';
+   switch($display_type) {
+       case 'rates_and_terms' : $field =  'field_block_related_products';
+       break;
+       case 'calculators' : $field = 'field_block_related_calculators';
+       break;
+       case 'our_goal' : $field = 'field_block_related_why_us';
+       break;
+   }
+    return $field;
+}
+
+function fgmc_homepage_form_node_revision_revert_confirm_alter(&$form, \Drupal\Core\Form\FormStateInterface &$form_state, $form_id) {
+    $form['#submit'][] = 'fgmc_homepage_node_revision_date_alteration';
+}
+
+function fgmc_homepage_node_revision_date_alteration(&$form,  \Drupal\Core\Form\FormStateInterface $form_state) {
+    if(isset($form['actions']['cancel']['#url'])) {
+        $urlobj = $form['actions']['cancel']['#url'];
+        $routeParameter = $urlobj->getRouteParameters();
+        $nodeid = $routeParameter['node'];
+        $nodeobj = \Drupal::entityTypeManager()->getStorage('node')->load($nodeid);
+        $new_revision_time = \Drupal::request()->server->get('REQUEST_TIME'); //date('U',strtotime('now')); //\
+        $nodeobj->setRevisionCreationTime($new_revision_time);
+        $nodeobj->save();
+    }
+   
+}

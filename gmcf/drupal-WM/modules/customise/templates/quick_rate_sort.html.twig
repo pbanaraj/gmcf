@@ -1,0 +1,50 @@
+							{% set i=0 %}
+							{% for key,rate in name.rates %}
+							{% set replace = ' ' %}
+							{% set replace_with = '_' %} 
+
+							{% set newkey = key|replace({ (replace): replace_with }) %}
+							{% if i==0 %}
+							{% set openclass = "open" %}
+							{% set openactive = "openactive" %}
+							{% else %}
+							{% set openclass = "" %}
+							{% set openactive = "" %}
+							{% endif %}
+							<div class="accordion-head {{openclass}}">
+								<h4>{{ key }}</h4>
+								<div class="arrow down"></div>
+
+							</div>
+							<div class="accordion-body {{openactive}}">
+								<div class="table-responsive">
+									<table class="table">
+										<thead>
+											<tr>
+												{% for key, val_qrq in name.result %}
+													<th>{{val_qrq.label}}
+													{% if val_qrq.help_text is not empty %}
+														<a href="#" data-toggle="tooltip" data-placement="top" title="{{val_qrq.help_text}}"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+													{% endif %}
+													</th>
+												{% endfor %}												
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+										{% for key1,rate1 in rate %}										
+											<tr>
+												<td>{{rate1.Rate}}%</td>
+												<td>{{rate1.APR}}%</td>
+												<td>${{rate1.MonthlyPayment}}</td>
+												<td>${{rate1.credit}}@{{rate1.points}} points</td>
+												<td>${{rate1.TotalFees}}</td>
+												<td class="text-center"><a class="select-rate" href="javascript:void(0)">Select Rate</a></td>
+											</tr>										
+										{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+							{% set i= i+1 %}
+							{% endfor %}

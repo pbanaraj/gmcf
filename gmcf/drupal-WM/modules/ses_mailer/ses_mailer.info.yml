@@ -1,0 +1,11 @@
+name: SES Mailer
+type: module
+description: A Drupal mailer integration with AWS Simple Email Service
+package: Other
+# core: 8.x
+
+# Information added by Drupal.org packaging script on 2016-04-18
+version: '8.x-1.0-alpha3'
+core: '8.x'
+project: 'ses_mailer'
+datestamp: 1460950146

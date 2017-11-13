@@ -1,0 +1,31 @@
+{# Default Values #}
+{#
+/**
+ * Available variables
+ * 
+ * items - to access nodes item.content['#node']
+ * parentNode
+ * columns
+ */
+
+#}
+
+
+<div class="loader_products"><img src="/themes/basis/images/bx_loader.gif" /></div>
+<ul class="bxslider" style="display:none;">
+  {% for item in items %}
+    {#node#}
+    {% set node = item.content['#node'] %}
+    {% if node.bundle() == 'products' %}
+        {#Short desc#}
+        {% set shortDesc = (node.hasField('field_product_short_desc')) ? node.field_product_short_desc.value : '' %}
+        <li>
+          <div class="col-item">
+            <div class="header text-center">{{node.title.value}}</div>
+            <div class="desc">{{shortDesc|raw}}</div>
+                <div class="text-center footer"><button class="btn btn-success" onclick="location.href='/products#{{node.nid.value}}'">Details</button></div>
+          </div>
+        </li>
+    {% endif %}
+  {% endfor %}
+</ul>

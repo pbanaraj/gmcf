@@ -1,0 +1,23 @@
+{% for key, rate in rates %}
+<div class="col-md-4">
+  <div class="rate-col">
+    <div class="header text-center">
+      {{key|replace({ ('_'): ' '})}}
+    </div>
+    <div class="row">
+      <div class="col-sm-6 col-xs-6 skyTx">
+        <span class="rate-heading">   Interest Rate </span>
+        <span class="font-md">
+          {{rate.rates.key_data.Rate}}%
+        </span>
+      </div>
+      <div class="col-sm-6 col-xs-6 skyTx">
+        <span class="rate-heading2">APR</span>
+        <span class="font-md">
+          {{rate.rates.key_data.APR}}%
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}

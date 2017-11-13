@@ -1,0 +1,28 @@
+<section class="section-4 row">
+	<div class="container">
+        <h4 class="text-center">{{block_data.block_title | raw}}</h4>
+        <div class="text-center font-md">{{block_data.block_desc | raw}}</div>
+		<div class="row">
+			{% for key, val in block_data.results %}
+				<div class="col-md-4 padd40 text-center">
+							<div class="col">
+									<p>{{val.title}}</p>									
+									<span class="custm"><img src="{{val.why_us_type_icon}}"> </span>
+									<h5>
+											{{val.why_us_data}}	
+									</h5>
+							</div>
+				</div>
+			{% endfor %}        
+        </div>
+        <div class="text-center ">
+				{% set url = url("<front>") %}
+				{% if block_data.preview_req == true %}
+                <button class="btn btn-success">Why we're good</button>
+				{% else %}
+				<button class="btn btn-success" onclick="location.href='{{url}}/whyusdetail'">Why we're good</button>
+				{% endif %}
+        </div>
+	</div>
+	
+</section>

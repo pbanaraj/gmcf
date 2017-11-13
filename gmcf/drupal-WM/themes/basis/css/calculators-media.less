@@ -1,0 +1,167 @@
+.calculator {
+	p {
+		&.fn {
+			text-align: justify;
+		}
+	}
+}
+@media (min-width: 1400px) {
+    .container {
+      width: 1366px;
+    }
+    .calc-home {
+    padding: 15px 0 0;
+    }
+    .calculator {
+        padding: 20px 15px;
+    }
+}
+@media (max-width: 1400px) {
+	.calculator .cal-bottom ul {
+		display: block;
+	}
+}
+@media only screen and (max-width: 991px) {
+  .calculator .calculetor-wrap {
+      padding-right: 0px;
+      .cal-right {
+        padding: 0 30px;
+      }
+      .chart-box {
+        width: 100%;
+		padding: 15px;
+		p.balance {
+			left: -45px;
+			top: 120px;
+		}
+      }
+	  .bar-chart {
+        width: 100%;
+		padding: 15px;
+		p.balance {
+			left: -45px;
+			top: 120px;
+		}
+      }
+      .result-btn {
+        display: block;
+      }
+      .panel {
+          min-height: initial;
+		  .panel-title {
+			  .respCollapse{
+				display: inline-block;
+				float: right;
+			  }
+		  }
+      }
+      .cal-right {
+        display: none;
+        padding-top: 0;
+        h5{
+            margin-top: 0!important;
+        }
+      }
+  }
+  .cal-bottom {
+    text-align: left;
+	.inlineBlock {
+		margin-top: 20px;
+	}
+	span {
+		display: block;
+		text-align: left !important;
+	}
+    .text-right {
+     text-align: left;
+    }
+  }
+  #piechart_first, #piechart_second, #piechart_third{
+    width: 250px;
+    margin: 0 auto;
+}
+.Investment-table tbody tr td:first-child a.collapseLink {
+    left: 35px;
+}
+}
+
+@media only screen and (min-width: 992px) {
+	.calculator .calculetor-wrap .cal-right {
+		display: block !important;
+	}
+	.panel-body.panel-collapse.collapse {
+		display: block !important;
+		height: auto !important;
+	}
+}
+@media only screen and (max-width: 767px) {
+
+.Investment-table, .cal-table, .amt_table_calc  { 
+                display: block !important;  
+thead,  tbody,  th, td,  tr,tr.collapse.in, tfoot { 
+                display: block !important; 
+}
+.collapse {
+    display: none !important;
+}
+thead{
+    border: 0 !important;
+}
+thead tr { 
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+} 
+// tr { border: 1px solid #ccc; } 
+td {                         
+    border: none;                    
+    position: relative;
+    padding-left: 50% !important; 
+    white-space: normal;
+    text-align:left;
+} 
+td:before, {                         
+    position: absolute;                          
+    top: 6px;
+    left: 6px;
+    width: 45%; 
+    padding-right: 10px; 
+    white-space: nowrap;
+    text-align:left;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+} 
+td:before { content: attr(data-title); }
+
+}
+
+.fixed-table-container tbody tr:first-child td, .fixed-table-container tbody td:first-child, .fixed-table-container tbody td{
+    border-top: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+}
+.fixed-table-container tbody td:last-child {
+	border-bottom: 1px solid #ddd;
+}
+.fixed-table-header {display: none; }
+
+}
+
+@media screen and (max-width: 480px) {
+	body, .font-md {
+		font-size: 16px;
+	}
+	h1, h2, h3, h4 {
+        font-size: 28px;
+    }
+    h5 {
+        font-size: 20px;
+    }
+	.calculator h5 {
+		font-size: 20px;
+	}
+	.calculator .cal-bottom {
+		font-size: 16px;
+	}
+}

@@ -1,0 +1,28 @@
+<div class="home-banner" style="background:url(/sites/default/files/images/{{block_data.banner_config.banner_image}});background-position: right bottom;background-repeat: no-repeat;background-size: cover; ">
+<div class="banner-caption">
+        <h1>{{block_data.banner_config.banner_title | raw}}</h1>
+        <div class="loan-option">
+        <h2>{{block_data.banner_config.banner_subtitle | raw}}</h2>
+                <button class="btn btn-success buyahome">Buy a Home</button>
+                <button class="btn btn-success refinance">Refinance</button>
+	</div>		
+        <div class="tm-slider">
+                <div class="loader_testimonial"><img src="/themes/basis/images/bx_loader.gif" /></div>
+                <ul class="bxslider-social" style="display:none;">
+                                                {% for key, testimonial in block_data.testimonials %}
+                        <li>
+                                <div class="col-sm-8">
+                                        "&nbsp;{{testimonial.body | raw}}&nbsp;"
+                                </div>
+                                <div class="col-sm-4 cus_name">
+                                        - {{testimonial.customer_name}}, <br> Customer since {{testimonial.customer_since}}
+                                </div>
+                        </li>
+                                                {% endfor %}
+                </ul>
+        </div>	
+</div>
+<div class="bbb-icon">
+ <a href="#"><img src="/themes/basis/images/BBB.PNG"></a>
+</div>
+</div>

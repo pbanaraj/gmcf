@@ -1,0 +1,18 @@
+{% if calculator_array is not empty %}
+<h5 class="text-center">{{ term_name }}</h5>
+{% endif %}
+{% for calc in calculator_array %}
+	<div class="calculators">
+		<div class="row">
+			<div class="col-md-5 cal-type">
+				<p class="text-right"><a href="{{ calc.page_path }}">{{ calc.title }}</a></p>
+			</div>
+			<div class="col-md-6 cal-desc">
+                <p>{{ calc.description|raw }} </p>
+			</div>
+			<div class="col-md-1 cal-link">
+				<a href="{{ calc.page_path }}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+			</div>
+		</div>
+	</div>
+{% endfor %}

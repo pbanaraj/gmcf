@@ -1,0 +1,25 @@
+{#
+/**
+ * Available variables
+ * 
+ * items - to access nodes item.content['#node']
+ * parentNode
+ * columns
+ */
+
+#}
+
+
+  {% for item in items %}
+    {#node#}
+    {% set node = item.content['#node'] %}
+
+    {% if node.bundle() == 'markup' %}
+      {#Body#}
+      {% set body = (node.hasField('body')) ? node.body.value : '' %}
+
+      <div class="col-lg-6">
+        {{body|raw}}
+      </div>
+    {% endif %}
+  {% endfor %}

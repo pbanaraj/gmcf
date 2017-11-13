@@ -1,0 +1,6 @@
+name: customise
+type: module
+description: Module for Customisation
+core: 8.x
+package: custom
+configure: customise.settings.form

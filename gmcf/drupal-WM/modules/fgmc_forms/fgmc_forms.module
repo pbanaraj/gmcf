@@ -1,0 +1,273 @@
+<?php
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+/**
+ * Implements hook_theme().
+ */
+function fgmc_forms_theme() {
+  $theme = [];
+  $theme['homepagepanel'] = [
+    'variables' => ['data' => null],
+    'template' => 'homepagepanel'
+  ];
+  $theme['editbannerconfig'] = [
+    'variables' => ['data' => null],
+    'template' => 'editbannerconfig'
+  ];
+  $theme['adminrates'] = [
+    'variables' => ['data' => null],
+    'template' => 'adminrates'
+  ];
+  $theme['editpdconfig'] = [
+    'variables' => ['data' => null],
+    'template' => 'editpdconfig'
+  ];
+  $theme['adminquickrates'] = [
+    'variables' => ['data' => null],
+    'template' => 'adminquickrates'
+  ];
+  $theme['calculator_default_config'] = [
+    'variables' => ['data' => null],
+    'template' => 'calculator_default_config'
+  ];
+  $theme['pmi_default_config'] = [
+    'variables' => ['data' => null],
+    'template' => 'pmi_default_config'
+  ];
+  $theme['arm_default_config'] = [
+    'variables' => ['data' => null],
+    'template' => 'arm_default_config'
+  ];
+  $theme['taxslab_default_config'] = [
+    'variables' => ['data' => null],
+    'template' => 'taxslab_default_config'
+  ];
+  return $theme;
+}
+function fgmc_forms_toolbar_alter(&$items) {
+   // Get the user details
+    $account = \Drupal::currentUser();
+    
+    $roles = $account->getRoles();
+    if(!in_array('administrator', $roles)){
+        unset($items['home']);
+        unset($items['administration']);
+        unset($items['shortcuts']);
+		unset($items['user']);
+        unset($items['workbench']);
+
+    }
+}
+function fgmc_forms_node_delete(\Drupal\Core\Entity\EntityInterface $node) {
+	$account = \Drupal::currentUser();    
+    $roles = $account->getRoles();
+	$basepath = \Drupal::request()->getBasePath();
+	if(in_array('approver', $roles)){		
+		$response = new RedirectResponse($basepath.'/admin/cms/content/'.$node->getType());		
+	}else{
+		$response = new RedirectResponse($basepath.'/admin/content/');		
+	}
+	$response->send();	
+}
+function fgmc_forms_user_logout($account) {
+  $basepath = \Drupal::request()->getBasePath();
+  if ($account->uid) {
+     session_destroy();
+  }
+  else {
+    drupal_set_message('You are already logged out.', 'error');
+  }
+  $response = new RedirectResponse($basepath.'/user/login');
+  $response->send();
+}
+
+/**
+ * Implementation of hook_form_alter().
+ */
+ function fgmc_forms_form_alter(&$form, $form_state, $form_id)  {
+	 if ($form_id == 'node_products_form' || $form_id == 'node_products_edit_form') {		
+		$form['#validate'][] = 'product_maximum_count_validate';
+	 }
+	 if ($form_id == 'node_testimonials_form' || $form_id == 'node_testimonials_edit_form' || $form_id == 'node_why_us_testimonials_form' || $form_id == 'node_why_us_testimonials_edit_form') {		
+		$form['#validate'][] = 'testimonials_maximum_count_validate';
+	 }
+	 if ($form_id == 'node_related_section_content_form' || $form_id == 'node_related_section_content_edit_form') {
+		$form['#validate'][] = 'fgmc_forms_form_validate';    
+	 }
+	 if ($form_id == 'node_education_sections_form' || $form_id == 'node_education_sections_edit_form') {
+		$form['#validate'][] = 'fgmc_forms_form_validate_sections';    
+	 } 
+	 if ($form_id == 'node_disclosures_form' || $form_id == 'node_disclosures_edit_form') {
+		$form['#validate'][] = 'fgmc_forms_form_validate_disclosures';    
+	 } 
+	 if ($form_id == 'node_leaders_form' || $form_id == 'node_leaders_edit_form') {
+		$form['#validate'][] = 'fgmc_forms_form_validate_leaders';    
+	 }
+	 if ($form_id == 'node_education_tiles_form' || $form_id == 'node_education_tiles_edit_form') {
+		$form['#validate'][] = 'fgmc_forms_form_validate_tiles';    
+	 }
+	 if ($form_id == 'node_job_openings_form') {
+		$form['#validate'][] = 'fgmc_forms_form_validate_job_openings';    
+	 }
+	 /*if ($form_id == 'node_disclosures_form' || $form_id == 'node_disclosures_edit_form' || $form_id == 'node_privacy_policy_form' || $form_id == 'node_privacy_policy_edit_form' || $form_id == 'node_terms_of_use_form' || $form_id == 'node_terms_of_use_edit_form') {		
+		$form['#validate'][] = 'disclosures_maximum_count_validate';
+	 }*/
+	 
+}
+function fgmc_forms_form_validate($form, &$form_state) {      
+	  $formst = $form_state->getValues();
+	  $section_id = $formst['field_rel_section'][0]['target_id'];
+	  $query = \Drupal::database()->select('node__field_rel_section', 'nrsection');
+	  $query->fields('nrsection', ['field_rel_section_target_id']);			
+	  $query->condition('nrsection.field_rel_section_target_id', $section_id);
+	  $result = $query->execute()->fetchAll();
+	  $num_of_results = count($result);	  
+	  $type_content = $formst['field_type_rel'][0]['value'];	  
+      if ($num_of_results >= 3) {
+		$form_state->setErrorByName('field_rel_section', t('You have exceeded max limit of 3.'));
+      }
+	  if($type_content == 'DL') {
+		if(count($formst['field_download_doc'][0]['fids']) == 0) {
+			$form_state->setErrorByName('field_download_doc', t('Please upload document.'));
+		}
+	  } else if($type_content == 'IL') {
+		if($formst['field_internal_link'][0]['uri'] == "") {
+			$form_state->setErrorByName('field_internal_link', t('Please add internal link.'));
+		}
+	  }
+	  else if($type_content == 'EL') {
+		if($formst['field_external_link'][0]['uri'] == "") {
+			$form_state->setErrorByName('field_external_link', t('Please add external link.'));
+		}
+	  }
+}
+function fgmc_forms_form_validate_sections($form, &$form_state) {     
+	  $formst = $form_state->getValues();	  
+	  $type_content = $formst['field_multimedia_type'][0]['value'];	  
+	  $short_desc = $formst['field_product_section_desc'][0]['value'];
+	  $title = $formst['title'][0]['value'];
+	  if($type_content == 'IMG') {
+		if(count($formst['field_image'][0]['fids']) == 0) {
+			$form_state->setErrorByName('field_image', t('Please upload image.'));
+		}
+	  } else if($type_content == 'VID') {
+		if($formst['field_video'][0]['value'] == "") {
+			$form_state->setErrorByName('field_video', t('Please add video link.'));
+		}
+	  }  
+	  if (!empty($title)) {
+		if (strlen(trim(html_entity_decode(strip_tags($title)))) > 70) {
+			$form_state->setErrorByName('title', "Title can not be more than 70");
+		}
+	  }
+	  if (!empty($short_desc)) {
+		if (strlen(trim(html_entity_decode(strip_tags($short_desc)))) > 90) {
+			$form_state->setErrorByName('field_product_short_desc', "Short description Can't be more than 90");
+		}
+	  } 
+}
+function fgmc_forms_form_validate_disclosures($form, &$form_state) {     
+	  $formst = $form_state->getValues();	  
+	  $type_content = $formst['field_disclosure'][0]['value'];	  
+	  
+	  if($type_content == 'content') {
+		if(count($formst['field_product_section_desc'][0]['value']) == 0) {
+			$form_state->setErrorByName('field_product_section_desc', t('Please add content.'));
+		}
+	  } else{
+		if(count($formst['field_download_doc'][0]['fids']) == 0) {
+			$form_state->setErrorByName('field_download_doc', t('Please upload pdf.'));
+		}
+	  }  
+	  
+}
+
+ 
+/**
+ * Validate product form
+ * Force form error if maximum count limit exceeds
+ *
+ */
+function product_maximum_count_validate ($form, &$form_state)  {
+	
+	$dyk = $form_state->getValue('field_product_section_desc');
+	$short_desc = $form_state->getValue('field_product_short_desc');
+	$long_desc = $form_state->getValue('field_product_long_desc');
+	
+    if ($dyk[0]['value']) {
+		if (strlen(trim(html_entity_decode(strip_tags($dyk[0]['value'])))) > 600) {
+		$form_state->setErrorByName('field_product_section_desc', "DYK Can't be more than 600");
+		}
+	}
+	if ($short_desc[0]['value']) {
+		if (strlen(trim(html_entity_decode(strip_tags($short_desc[0]['value'])))) > 80) {
+		$form_state->setErrorByName('field_product_short_desc', "Short description Can't be more than 80");
+		}
+	}
+	if ($long_desc[0]['value']) {
+		if (strlen(trim(html_entity_decode(strip_tags($long_desc[0]['value'])))) > 800) {
+		$form_state->setErrorByName('field_product_long_desc', "Long description Can't be more than 800");
+		}
+	}
+  
+}
+/**
+ * Validate product form
+ * Force form error if maximum count limit exceeds
+ *
+ */
+function testimonials_maximum_count_validate ($form, &$form_state)  { 
+	$testimonials_body = $form_state->getValue('body');
+	
+	if ($testimonials_body[0]['value']) {		
+		if (strlen(trim(html_entity_decode(strip_tags($testimonials_body[0]['value'])))) > 300) {
+		$form_state->setErrorByName('body', "Body Can't be more than 300");
+		}
+	}
+  
+}
+
+function fgmc_forms_form_validate_leaders($form, &$form_state) {     
+	  $formst = $form_state->getValues();
+	  $title = $formst['title'][0]['value'];
+	  if (!empty($title)) {
+		if (strlen(trim(html_entity_decode(strip_tags($title)))) > 25) {
+			$form_state->setErrorByName('title', "Title can not be more than 25");
+		}
+	  }
+}
+function fgmc_forms_form_validate_tiles($form, &$form_state) {     
+	  $formst = $form_state->getValues();	    
+	  $short_desc = $formst['field_product_section_desc'][0]['value'];
+	  if (!empty($short_desc)) {
+		if (strlen(trim(html_entity_decode(strip_tags($short_desc)))) > 70) {
+			$form_state->setErrorByName('field_product_short_desc', "Short description Can't be more than 70");
+		}
+	  } 
+}
+function fgmc_forms_form_validate_job_openings($form, &$form_state) {
+    $query = \Drupal::entityQuery('node');
+    $query->condition('status', 1);
+    $query->condition('type', 'job_openings');
+    $node_count = $query->count()->execute();    
+	if ($node_count > 4) {
+      $form_state->setErrorByName('title', 'Reached the maximum limit of creation of job openings.');
+    }
+}
+/**
+ * Validate disclosures form
+ * Force form error if maximum count limit exceeds
+ *
+ */
+function disclosures_maximum_count_validate ($form, &$form_state)  {
+	
+	$desc = $form_state->getValue('field_product_section_desc');
+	
+    if ($desc[0]['value']) {
+		if (strlen(trim(html_entity_decode(strip_tags($desc[0]['value'])))) > 600) {
+		$form_state->setErrorByName('field_product_section_desc', "Description Can't be more than 600");
+		}
+	}  
+}

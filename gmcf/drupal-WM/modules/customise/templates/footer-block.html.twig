@@ -1,0 +1,90 @@
+{% if page == 'inner'  %}
+
+    <footer class="page-footer row">
+        <div class="row footer-top">
+                <div class="col-lg-4">
+                        <ul class="social">
+                            <li>
+                                    <h4> {{heading | raw}}</h4>
+                            </li>
+                            {% for key, item in social_media %}
+                                <li>
+                                        <a href="{{ item.link }}" class="fb" target="_blank"> 
+                                                <img src="{{ item.icon }}" alt=""> 
+                                                <img class="hoverPhoto" src="{{ item.icon_hover }}" alt=""> 
+                                        </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                </div>
+
+                <div class="col-lg-8">
+                        {{ contact | raw }}
+                </div>
+
+        </div>
+        <div class="row footer-nav">
+                <div class="col-lg-6">
+                        <ul class="">
+                                {% for key, item in footer_left %}
+                                    <li><a href="{{ item.url }}"> {{ item.title }}</a> </li>{% if loop.last is empty %}|{% endif %}
+                                {% endfor %}
+                        </ul>
+                </div>
+                <div class="col-lg-6">
+                        <ul class="text-right">
+                                {% for key, item in footer_right %}
+                                    <li><a href="{{ item.url }}"> {{ item.title }}</a> </li>{% if loop.last is empty %}|{% endif %}
+                                {% endfor %}
+                        </ul>
+                </div>
+        </div>
+        <div class="row footer-bottom">
+                {{ privacy | raw }}
+        </div>
+    </footer>
+
+  {% else %}
+
+    <footer class="footer row">
+        <div class="row footer-top">
+                <h4 class="col-lg-12">{{heading | raw}}</h4>
+                <div class="col-lg-6">
+                        {{footxt | raw}}
+                        <ul class="social">
+                            {% for key, item in social_media %}
+                                <li>
+                                        <a href="{{ item.link }}" class="fb" target="_blank"> 
+                                                <img src="{{ item.icon }}" alt=""> 
+                                                <img class="hoverPhoto" src="{{ item.icon_hover }}" alt=""> 
+                                        </a>
+                                </li>
+                            {% endfor %}    
+                        </ul>
+                </div>
+                <div class="col-lg-6">
+                        {{ contact | raw }}
+                </div>
+        </div>
+        <div class="row footer-nav">
+                <div class="col-lg-6">
+                        <ul class="">
+                                {% for key, item in footer_left %}
+                                    <li><a href="{{ item.url }}"> {{ item.title }}</a> </li>{% if loop.last is empty %}|{% endif %}
+                                {% endfor %}
+                        </ul>
+                </div>
+                <div class="col-lg-6">
+                        <ul class="text-right">
+                                {% for key, item in footer_right %}
+                                    <li><a href="{{ item.url }}"> {{ item.title }}</a> </li>{% if loop.last is empty %}|{% endif %}
+                                {% endfor %}
+                        </ul>
+                </div>
+        </div>
+        <div class="row footer-bottom">
+                {{ privacy | raw }}
+        </div>
+    </footer>
+                        
+{% endif %}

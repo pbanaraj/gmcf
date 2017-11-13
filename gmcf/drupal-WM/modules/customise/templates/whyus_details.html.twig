@@ -1,0 +1,116 @@
+{{ attach_library('customise/customise.whyus') }}
+
+<section class="section-2 container">
+	<h4 class="text-center">{{name.whyus_config['whyus_top_title'] | raw}}</h4>
+	<p class="text-center font-md">{{name.whyus_config['whyus_top_desc'] | raw}}	</p>
+
+</section>
+
+<section class="container why-us">
+<div class="row">
+	<div class="col-lg-2 padd0" id="left_testimonial">
+		<ul id="testimonial1">
+			{% for key, val in name.leftArrImage %}
+				<li>
+					<div class="col">
+						<img src="{{val.image}}" alt="" height="300" width="100%">
+					</div>
+				</li>
+			{% endfor %}			
+		</ul>
+		<ul id="testimonial2">
+			{% for key1, val1 in name.leftArrText %}
+				<li>
+					<div class="col">
+						<div class="overlay"></div>
+						<p><span>"</span>{{val1.body|raw}}<span class="text-right">"</span></p>
+						<img src="{{val1.image}}" alt="" height="300" width="100%">
+					</div>
+				</li>
+			{% endfor %}
+			
+		</ul>
+	</div>
+	<div class="col-lg-8 padd0">
+		<div class="col-mid">
+			<div class="sky">{{name.whyus_config['whyus_testimony_title'] | raw}}</div>
+			<div class="pera-bottom">
+				<div>{{name.whyus_config['whyus_testimony_desc'] | raw}}</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-2 padd0" id="right_testimonial">
+		<ul id="testimonial3">
+			{% for key2, val2 in name.rightArrText %}
+				<div class="col">
+					<div class="overlay"></div>
+					<p><span>"</span>{{val2.body|raw}}<span class="text-right">"</span></p>
+					<img src="{{val2.image}}" alt="" height="300" width="100%">
+				</div>
+			{% endfor %}
+			
+		</ul>
+		<ul id="testimonial4">
+			{% for key3, val3 in name.rightArrImage %}
+				<li>
+					<div class="col">
+						<img src="{{val3.image}}" alt="" height="300" width="100%">
+					</div>
+				</li>
+			{% endfor %}
+			
+		</ul>
+	</div>
+	</div>
+</section>
+<section class="sky row process">
+		<h4 class="text-center">{{name.whyus_config['whyus_our_process_title'] | raw}}</h4>
+</section>
+<section class="section-2 container">
+	<h4 class="text-center">{{name.whyus_config['whyus_loan_process_title'] | raw}}</h4>
+	<p class="text-center font-md">{{name.whyus_config['whyus_loan_process_desc'] | raw}}
+	</p>
+	<div class="text-center">
+		<button class="btn btn-info">Let's get started! </button>
+	</div>
+</section>
+<section class="section-4 row" id="our_process_ajax">
+<div class="container">
+	{% for key, val in name.results %}
+		<div class="col-md-4 padd40 text-center">
+			<div class="col">
+				<h4>{{val.title}}</h4>									
+				<span class="custm  wow rollIn"><img src="{{val.why_us_type_icon}}"> </span>
+				<h5>
+						{{val.why_us_data}}	
+				</h5>
+			</div>
+		</div>
+	{% endfor %}        
+	
+	<div class="text-center paddTB15">
+			<button class="btn btn-info custom-btn">Why we're good</button>
+	</div>
+	</div>
+</section>
+
+
+<section class="certificate container" id="certificate_ajax">
+	{% if name.certificateResults|length < 3 %}
+		<ul class="awards">
+			{% for key, val in name.certificateResults %}
+				<li class="text-center">
+					<img src="{{val.icon}}" alt="">
+				</li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<ul class="bxslider">
+			{% for key, val in name.certificateResults %}
+				<li>
+					<img src="{{val.icon}}" />
+				</li>			
+			{% endfor %}
+		</ul>
+	{% endif %}
+</section>

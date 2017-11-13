@@ -1,0 +1,142 @@
+/*header{
+	background-color: #e0e0d8;
+}
+
+.site-name a{
+	font-size: 3em;
+	font-weight: bold;
+	color:#fff;
+}
+
+#main{
+	min-height: 300px;
+
+}
+
+
+#block-sitebranding img{
+	width: 145px;
+	height: auto;
+}
+
+#block-mainnavigation{
+	float: right;
+}
+
+#block-mainnavigation .menu-item {
+    padding-top: 23px;
+}
+
+#block-mainnavigation ul li{
+	float: left;
+	margin-right: 30px;
+}
+
+#block-mainnavigation ul li a{
+	color: #fff;
+	text-transform: uppercase;
+    font-size: 1.2em;
+}
+
+.region-header{
+	padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+
+.region-content .node__submitted{
+margin:10px;
+}
+
+.region-content .view-content .views-row{
+background-color: #f2f2f2;
+padding: 30px;
+margin-bottom: 30px;
+}
+
+.region-content .view-content .views-row:first-child {
+margin-top: 30px;
+}
+
+
+#block-searchform{
+	margin-top:30px;
+	padding: 15px;
+	border: 1px solid #f2f2f2;
+	background-color: #eff1f3;
+    border-bottom: 4px solid rgba(0,0,0,0.05);
+    border-radius: 3px;
+}
+
+
+#footer{
+	background-color: #000;
+	color: #fff;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+}
+#headline  ul li.menu-item{
+	float:right;
+	padding-right:1em;
+}
+#header #block-custommenu ul li.menu-item {
+	float:left;
+	padding-right:1em;
+}
+#block-bannerblock .image { 
+   position: relative; 
+   width: 100%; 
+}
+
+#block-bannerblock h2 { 
+   position: absolute; 
+   top: 200px; 
+   left: 0; 
+   width: 100%; 
+}
+.layout-main-wrapper1 {
+    min-height: 300px;
+}
+.layout-container1 {
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+}
+.clearfix1::after {
+    clear: both;
+    content: "";
+    display: table;
+}
+.layout-main1 {
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+.layout-sidebar-first .main-content1 {
+    margin-right: 0;
+}
+.main-content1 {
+    position: relative;
+	float:left;
+	width:77%;
+}
+#sidebar-first {
+    width: 20%;
+	margin-right:40px
+}
+.sidebar {
+    float: left;
+    position: relative;
+}
+.sidebar .block {
+    background-color: #f6f6f2;
+    border-color: #f9f9f9;
+}
+.sidebar .block {
+    border-style: solid;
+    border-width: 1px;
+    padding: 15px 20px;
+    margin: 0 0 20px;
+}*/
+.hide{display:none;}

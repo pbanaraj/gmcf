@@ -1,0 +1,46 @@
+{#
+/**
+ * Available variables
+ * 
+ * items - to access nodes item.content['#node']
+ * parentNode
+ * columns
+ */
+
+#}
+{# NOTE: THIS TEMPLATE IS NOT IN USE FOR RATES AND TERMS AND FEES DISPLAY TYPE. INSTEAD USE field--field-block-related-products.html.twig #}
+{% set itemsPerRowClass = 'col-lg-4' %}
+
+{% if columns == 1 %}
+  {% set itemsPerRowClass = 'col-lg-12' %}
+{% elseif columns == 2 %}
+  {% set itemsPerRowClass = 'col-lg-6' %}
+{% elseif columns == 4 %}
+  {% set itemsPerRowClass = 'col-lg-3' %}
+{% endif %}
+
+<div class="loader_products"><img src="/themes/basis/images/bx_loader.gif" /></div>
+
+<ul class="bxslider" style="display:none;">
+  {% for item in items %}
+
+    {#node#}
+    {% set node = item.content['#node'] %}
+    {% if node.bundle() == 'products' %}
+
+      {#Short desc#}
+      {% set shortDesc = (node.hasField('field_product_short_desc')) ? node.field_product_short_desc.value : '' %}
+
+      <div class="col-item">
+        <div class="header text-center">{{node.title.value}}</div>
+        <div class="desc">{{shortDesc|raw}}</div>      
+        <div class="text-center footer">
+          <button class="btn btn-success" onclick="location.href = '/products#{{node.nid.value}}'">
+            Details
+          </button>
+        </div>
+      </div>
+
+    {% endif %}
+  {% endfor %}
+</ul>

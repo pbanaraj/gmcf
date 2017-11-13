@@ -1,0 +1,23 @@
+.printWindowDiv {
+	padding: 40px;
+	 color: #004148;
+    font-size: 18px;
+	font-weight:300;
+}
+.printWindowDiv .print-secTitle {
+	padding: 0 15px;
+	font-size: 36px;
+	color: #004148;
+	font-weight:300;
+	margin-bottom: 15px;
+}
+.printWindowDiv .cart {
+	width: 280px;
+	margin: 20px auto;
+}
+.printWindowDiv .cart img {
+	width: 100%;
+}
+.printWindowDiv #printMailDiv, .printWindowDiv .btn-info, .wmreadytostart {
+	display:none;
+}

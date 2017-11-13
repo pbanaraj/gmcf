@@ -1,0 +1,38 @@
+header {
+width:700px;
+margin:0 auto;
+padding:20px 0;
+border-bottom:1px solid #ccc;
+}
+header .consumer {
+	font-weight:bold;
+	margin-top:20px;
+}
+section {
+width:700px;
+margin:0 auto;
+}
+.content {
+	font-weight:bold;
+	
+}
+table thead tr th {
+	background : #58595b;
+	color:#fff;
+}
+table tfoot tr td {
+	font-weight:bold;
+}
+
+@media print {
+
+.col-sm-6 {
+	width:50% !important;
+	float:left !important;
+}
+table thead tr th {
+	background-color: #1a4567 !important;
+    -webkit-print-color-adjust: exact; 
+	color:#fff !important;
+}
+}

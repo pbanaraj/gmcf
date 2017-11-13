@@ -1,0 +1,32 @@
+fgmc_homepage.rates:
+  path: 'fgmc_homepage_rates'
+  defaults:
+    _controller: '\Drupal\fgmc_homepage\Controller\FGMCHomePageController::getMIRates'
+  options:
+    no_cache: TRUE
+  requirements:
+    _access: 'TRUE'
+fgmc_homepage.terms_disclosure:
+  path: 'fgmc_homepage_terms_disclosure'
+  defaults:
+    _controller: '\Drupal\fgmc_homepage\Controller\FGMCHomePageController::getTerms_and_disclosure'
+  options:
+    no_cache: TRUE
+  requirements:
+    _access: 'TRUE'
+fgmc_homepage.rate_date_time:
+  path: 'fgmc_homepage_rate_date_time'
+  defaults:
+    _controller: '\Drupal\fgmc_homepage\Controller\FGMCHomePageController::getRatesDateAndTime'
+  options:
+    no_cache: TRUE
+  requirements:
+    _access: 'TRUE'
+fgmc_homepage.testimonials_content:
+  path: 'fgmc_homepage_testimonial_content'
+  defaults:
+    _controller: '\Drupal\fgmc_homepage\Controller\FGMCHomePageController::getTestimonials'
+  options:
+    no_cache: TRUE
+  requirements:
+    _access: 'TRUE'

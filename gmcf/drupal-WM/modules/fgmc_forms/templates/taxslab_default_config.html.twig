@@ -1,0 +1,46 @@
+{{ attach_library('fgmc_forms/fgmc_forms.confirm') }}
+<form method="POST" action="{{path('fgmc_forms_admintaxslabconfigsubmit')}}">
+<table class="table">
+    <thead>
+      <tr>
+      	<th>#</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Factor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Range 1</td>
+		<td><input type="text" id="RGA1_from_value" class="ins_rate_number" name="RGA1_from_value" required value="{{data.taxslabconfig_values.RGA1_from_value}}"></input></td>
+        <td><input type="text" id="RGA1_to_value" class="ins_rate_number" name="RGA1_to_value" required value="{{data.taxslabconfig_values.RGA1_to_value}}"></input></td>
+        <td><input type="text" id="RGA1_percent_value" class="ins_rate_number" name="RGA1_percent_value" required value="{{data.taxslabconfig_values.RGA1_percent_value}}"></input></td>       
+      </tr>
+      <tr>
+        <td>Range 2</td>
+		<td><input type="text" id="RGA2_from_value" class="ins_rate_number" name="RGA2_from_value" required value="{{data.taxslabconfig_values.RGA2_from_value}}"></input></td>
+        <td><input type="text" id="RGA2_to_value" class="ins_rate_number" name="RGA2_to_value" required value="{{data.taxslabconfig_values.RGA2_to_value}}"></input></td>
+        <td><input type="text" id="RGA2_percent_value" class="ins_rate_number" name="RGA2_percent_value" required value="{{data.taxslabconfig_values.RGA2_percent_value}}"></input></td>   
+      </tr>
+     <tr>
+       <td>Range 3</td>
+		<td><input type="text" id="RGA3_from_value" class="ins_rate_number" name="RGA3_from_value" required value="{{data.taxslabconfig_values.RGA3_from_value}}"></input></td>
+        <td><input type="text" id="RGA3_to_value" class="ins_rate_number" name="RGA3_to_value" required value="{{data.taxslabconfig_values.RGA3_to_value}}"></input></td>
+        <td><input type="text" id="RGA3_percent_value" class="ins_rate_number" name="RGA3_percent_value" required value="{{data.taxslabconfig_values.RGA3_percent_value}}"></input></td>   
+      </tr>
+     <tr>
+        <td>Range 4</td>
+		<td><input type="text" id="RGA4_from_value" class="ins_rate_number" name="RGA4_from_value" required value="{{data.taxslabconfig_values.RGA4_from_value}}"></input></td>
+        <td><input type="text" id="RGA4_to_value" class="ins_rate_number" name="RGA4_to_value" required value="{{data.taxslabconfig_values.RGA4_to_value}}"></input></td>
+        <td><input type="text" id="RGA4_percent_value" class="ins_rate_number" name="RGA4_percent_value" required value="{{data.taxslabconfig_values.RGA4_percent_value}}"></input></td>   
+      </tr>
+	  <tr>
+        <td>Range 5</td>
+		<td><input type="text" id="RGA5_from_value" class="ins_rate_number" name="RGA5_from_value" required value="{{data.taxslabconfig_values.RGA5_from_value}}"></input> & above</td>
+        <td><input type="hidden" id="RGA5_to_value" class="ins_rate_number" name="RGA5_to_value" required value=""></input></td>
+        <td><input type="text" id="RGA5_percent_value" class="ins_rate_number" name="RGA5_percent_value" required value="{{data.taxslabconfig_values.RGA5_percent_value}}"></input></td>   
+      </tr>
+	  </tbody>
+  </table>
+  <div><input type="submit" value="Save Config" /></div>
+  </form>

@@ -1,0 +1,78 @@
+{# Default Values #}
+
+{% set displayType = node.hasField('field_block_display_type') ? node.get('field_block_display_type').value : '' %}
+{% set columns =  node.hasField('field_number_of_columns_per_row') ? node.get('field_number_of_columns_per_row').value : '' %}
+{% set preview_req = getPreview_Req() %}
+{%
+  set classes = [
+    'field',
+    'field--name-' ~ field_name|clean_class,
+    'field--type-' ~ field_type|clean_class,
+    'field--label-' ~ label_display,
+  ]
+%}
+{%
+  set title_classes = [
+    'field__label',
+    label_display == 'visually_hidden' ? 'visually-hidden',
+  ]
+%}
+{% if logged_in_user_status == true and ishomepage == true %}
+    {% set nodeid = node.id() %}
+    {% if displayType == 'calculators' %}
+        <div class="edit_homesections calc_section"><a href="/node/{{ nodeid }}/edit?destination=/home"><span class="glyphicon glyphicon-pencil"></span> Edit Calculators</a></div>
+    {% elseif displayType == 'let_us_help' %}
+        <div class="edit_homesections edu_section"><a href="/node/{{ nodeid }}/edit?destination=/home"><span class="glyphicon glyphicon-pencil"></span> Edit Mortgage School</a></div>
+    {% endif %}
+{% endif%}
+
+    {% if displayType == 'calculators' %}
+        <div  class="col-lg-5 lightPink wow fadeIn">
+    {% elseif displayType == 'let_us_help' %}
+        <div class="col-lg-6">
+    {% else %}
+        <div>
+    {% endif %}
+       {# {% for item in items %}
+
+        {% set node = item.content['#node'] %}
+
+        {% if node.bundle() == 'markup' %}
+            {% set button  = node.body.value|split('<button') %}
+            {% set newtext = button|join('<button disabled') %}
+            {% if preview_req == true %}
+                {{ newtext|raw }}
+            {% else %}
+                {{node.body.value|raw}}
+            {% endif %}
+        {% endif %}
+
+        {% endfor %}   #}
+        {% if label_hidden %}
+          {% if multiple %}
+            <div{{ attributes.addClass(classes, 'field__items') }}>
+              {% for item in items %}
+                        <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+              {% endfor %}
+            </div>
+          {% else %}
+            {% for item in items %}
+                        <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+            {% endfor %}
+          {% endif %}
+        {% else %}
+          <div{{ attributes.addClass(classes) }}>
+            <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
+            {% if multiple %}
+              <div class="field__items">
+            {% endif %}
+            {% for item in items %}
+              <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+            {% endfor %}
+            {% if multiple %}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+    </div>
+

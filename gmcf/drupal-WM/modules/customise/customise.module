@@ -1,0 +1,185 @@
+<?php
+
+/**
+ * @file
+ * Contains customise.module..
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Drupal\Core\PhpStorage\PhpStorageFactory;
+
+/**
+ * Implements hook_help().
+ */
+function customise_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the customise module.
+    case 'help.page.customise':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Module for Customisation') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function customise_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+
+  if ($form_id == 'search-block-form') {
+   
+    $form['keys']['#attributes']['class'][] = 'form-control searchIcon';
+    $form['keys']['#attributes']['placeholder'] = 'Search';
+  }else if($form_id == 'taxonomy_term_calculator_type_form') {
+      $vid = $form['vid']['#value'];
+      $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid,0,1); 
+      $new_terms = array(0=>'<root>');
+      foreach($terms as $term){
+          $new_terms[$term->tid] = $term->name;
+      }
+
+      $form['relations']['parent']['#options'] = $new_terms;
+      $form['relations']['parent']['#states'] = array(
+          'invisible' => array(
+            ':input[name="field_is_common_calc_category[value]"]' => array('checked' => TRUE),
+          ),
+        );
+      $form['#validate'][] = 'customise_form_calculator_type_validate';
+  }
+  if (($form_id == 'node_social_media_edit_form') || ($form_id == 'node_social_media_form') || ($form_id == 'menu_link_content_menu_link_content_form')) {
+      $form['actions']['submit']['#submit'][]  = 'mymodule_node_form_submit';
+  }
+  
+    if(($form_id == "node_products_edit_form") || ($form_id == "node_products_form")){
+
+    //        $form['#attached']['library'][] = 'customise/product-type';
+    //        $form['#attached']['drupalSettings']['path']['product_type_fetch_api']= \Drupal\Core\Site\Settings::get('product_type_fetch_api');   
+
+        try {
+            $client = new \GuzzleHttp\Client();
+            $url=\Drupal\Core\Site\Settings::get('product_type_fetch_api');
+            $res = $client->request('GET', $url, []);
+            $data = $res->getBody();
+         }
+        catch (RequestException $e) {
+            echo $e->getMessage();
+            return FALSE;
+        }
+
+            $dataarray=json_decode($data, true);
+        foreach($dataarray as $termdata){
+            $new_terms[$termdata['masterDataCode']] = t($termdata['masterDataName']);
+        }
+
+               $form['field_product_type']['widget']['#options'] = $new_terms;
+
+
+    }   
+}
+
+function mymodule_node_form_submit(array &$form, FormStateInterface $form_state, $form_id){
+    drupal_flush_all_caches('*', 'cache_page', TRUE);
+}
+
+/**
+ * validate function for term form
+ */
+function customise_form_calculator_type_validate( &$form, FormStateInterface $form_state){
+
+    if($form['#form_id'] == 'taxonomy_term_calculator_type_form') {
+        $isCommonarr = $form_state->getValue('field_is_common_calc_category');
+        $tid = $form_state->getValue('tid');
+        $isCommon = $isCommonarr['value'];
+        $alreadyCommonExists = false;
+        $alreadyCommonCategory = '';
+        $dbtid = 0;
+        if($isCommon == 1) {
+            $vid = $form['vid']['#value'];
+            $query = \Drupal::entityQuery('taxonomy_term');
+            $query->condition('vid', $vid);
+            $tids = $query->execute();
+            $terms = \Drupal\taxonomy\Entity\Term::loadMultiple($tids);
+            foreach($terms as $term) {
+                $isCommondb = $term->get('field_is_common_calc_category')->value;
+                if($isCommondb) {
+                    $alreadyCommonExists = true;
+                    $alreadyCommonCategory = $term->get('name')->value;
+                    $dbtid = $term->get('tid')->value;
+                    continue;
+                }
+            }
+            if($alreadyCommonExists && $dbtid != $tid){
+                $error_message = 'Common Category "'.$alreadyCommonCategory.'" already exists! Please try to Add Sub categories to existing "'.$alreadyCommonCategory.'" category.';
+                $form_state->setErrorByName('body', $error_message);
+            }
+        }
+    }
+}
+/**
+ * Implements hook_theme().
+ */
+function customise_theme($existing, $type, $theme, $path) {
+ 
+  $theme = array(
+
+        'logo_block' => array('variables' => array('block_data' => NULL,'act_theme' => null, 'logo' => null),),
+        'slidemenu_block' => array('variables' => array('slide_menu'=>null,'page' => null,'slidemenu_icon' => null),),
+        'menu_block' => array('variables' => array('menu_items'=>null),),
+        'header_right_block' => array('variables' => array('block_data' => NULL, 'ph_number' => null, 'search' => null, 'page' => null, 'ph_icon' => null),),
+        'banner_block' => array('variables' => array('block_data' => NULL),),
+        'quick_rate_quote_block' => array('variables' => array('block_data' => NULL),),
+        'fees_block' => array('variables' => array('block_data' => NULL),),
+        'number_block' => array('variables' => array('block_data' => NULL),),
+        'rate_and_terms_block' => array('variables' => array('block_data' => NULL),),
+        'our_goal_block' => array('variables' => array('block_data' => NULL),),
+        'we_believe_block' => array('variables' => array('block_data' => NULL),),
+        'footer_block' => array('variables' => array('block_data' => NULL, 'footer_left' => null, 'footer_right' => null, 'social_media' => null, 'contact' => null, 'privacy' => null, 'heading' =>null, 'footxt' =>null, 'page' => null),),
+        'career_block' => array('variables' => array('block_data' => NULL),),
+        'product_detail_page'=>array('variables' => array('name' => NULL),'template' => 'product_details'),
+        'whyus_detail_page'=>array('variables' => array('name' => NULL),'template' => 'whyus_details'),
+        'whyus_detail_page_new'=>array('variables' => array('name' => NULL),'template' => 'whyus_details_new'),
+        'quick_rate_landing'=>array('variables' => array('name' => NULL),'template' => 'quick_rate_landing'),
+        'quick_rate_landing_submit'=>array('variables' => array('name' => NULL),'template' => 'quick_rate_landing_submit'),
+        'quick_rate_sort'=>array('variables' => array('name' => NULL),'template' => 'quick_rate_sort'),
+        'about_detail_page'=>array('variables' => array('name' => NULL),'template' => 'aboutus_details'),
+        'mortgage_school_detail'=>array('variables' => array('name' => NULL),'template' => 'mortgage_school_detail'),
+        'mortgage_school_sections_detail'=>array('variables' => array('name' => NULL),'template' => 'mortgage_school_sections_detail'),
+        'calculate_payment_taxes_insurance'=>array('variables' => array('name' => NULL),'template' => 'calculate_payment_taxes_insurance'),
+        'calculate_refinance'=>array('variables' => array('name' => NULL),'template' => 'calculate_refinance'),
+        'showleadinfo'=>array('variables' => array('name' => NULL),'template' => 'tp_show_lead_info'),
+        'tp_landing'=>array('variables' => array('name' => NULL),'template' => 'tp_landing'),
+        'tp_landing_thank'=>array('variables' => array('name' => NULL),'template' => 'tp_landing_thank'),
+        'what_is_my_balance'=>array('variables' => array('name' => NULL),'template' => 'what_is_my_balance'),
+        'loan_payment_calc'=>array('variables' => array('name' => NULL),'template' => 'loan_payment_calc'),	
+        'calculate_debt_conso'=>array('variables' => array('name' => NULL),'template' => 'calculate_debt_conso'),
+        'product_detail'=>array('variables' => array('name' => NULL),'template' => 'product_details_slider'),
+
+  );
+  
+  return $theme;
+}
+
+
+function customise_mail($key, &$message, $params) {
+  if ($key == 'mail_content') {
+    $message['subject'] = $params['subject'];
+    $message['body'][] = $params['body'];
+  }
+}
+function customise_node_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
+   if ($entity->getType() == 'basic_page' && $view_mode == 'full') {
+    $build['#cache']['max-age'] = 0;
+  }
+}
+
+function customise_node_update($node) {
+
+ if($node->getType()=='calculators' || $node->getType()== "products" || $node->getType()=="why_us"){
+      entity_render_cache_clear();
+ }
+}

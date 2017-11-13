@@ -1,0 +1,176 @@
+fgmc_forms_section:
+  path: 'admin/sectionsConfig'
+  defaults:
+    _form: '\Drupal\fgmc_forms\Form\SectionForm'
+    _title: 'Sections Config Form'
+  requirements:
+    _permission: 'access content'
+fgmc_forms_sethomepagepanel:
+  path: 'admin/sethomepagepanel'
+  defaults:
+    _form: '\Drupal\fgmc_forms\Form\HomePagePanelSettingsForm'
+    _title: 'Home Page'
+  requirements:
+    _permission: 'access content'
+fgmc_forms_bannerconfig:
+  path: 'admin/bannerConfig'
+  defaults:
+    _form: '\Drupal\fgmc_forms\Form\BannerConfigForm'
+    _title: 'Home Page Banner Info'
+  requirements:
+    _permission: 'access content'
+#fgmc_forms_homepagepanel:
+#  path: '/home'
+#  defaults:
+#    _controller: '\Drupal\fgmc_forms\Controller\FgmcController::homepagepanel'
+#    _title: 'Home'
+#  options:
+#     no_cache: TRUE
+#  requirements:
+#    _permission: 'access content'
+fgmc_forms_viewblocklist:
+  path: 'admin/viewblocklist'
+  defaults:
+    _controller: '\Drupal\fgmc_forms\Controller\FgmcController::viewblocklist'
+    _title: 'view block list'
+  requirements:
+    _permission: 'access content'
+fgmc_forms_removesection:
+  path: 'admin/removesection'
+  defaults:
+    _controller: '\Drupal\fgmc_forms\Controller\FgmcController::removesection'
+    _title: 'remove section'
+  requirements:
+    _permission: 'access content'
+fgmc_forms_editfieldform:
+  path: 'admin/edit_fields/{arg}'
+  defaults:
+    _form: '\Drupal\fgmc_forms\Form\RateBlockForm'
+  requirements:
+    _access: 'TRUE'
+fgmc_forms_adminrates:
+  path: 'admin/adminrates'
+  defaults:
+    _controller: '\Drupal\fgmc_forms\Controller\FgmcController::adminrates'
+    _title: 'Admin Rates'
+  requirements:
+   _access: 'TRUE'
+fgmc_forms_adminratessubmit:
+  path: 'admin/adminratessubmit'
+  defaults:
+    _controller: '\Drupal\fgmc_forms\Controller\FgmcController::adminratessubmit'
+    _title: 'Admin Rates Submit'
+  requirements:
+    _access: 'TRUE'
+fgmc_forms_productdetailsconfig:
+  path: 'admin/ProductDetailsConfig'
+  defaults:
+    _controller: '\Drupal\fgmc_forms\Controller\FgmcController::editproductdetailsconfig'
+    _title: 'Product Details Config Form'
+  requirements:
+    _permission: 'access content fgmc user'
+fgmc_forms_termsanddiscconfig:
+  path: 'admin/termsanddiscConfig'
+  defaults:
+    _form: '\Drupal\fgmc_forms\Form\TermsDisclosureConfigForm'
+    _title: 'Terms and Diclosure'
+  requirements:
+    _permission: 'access content'
+fgmc_forms_adminquickrates:
+  path: 'admin/adminquickrates'
+  defaults:
+    _controller: '\Drupal\fgmc_forms\Controller\FgmcController::adminquickrates'
+    _title: 'Admin Quick Rates'
+  requirements:
+   _access: 'TRUE'
+fgmc_forms_adminquickratessubmit:
+  path: 'admin/adminquickratessubmit'
+  defaults:
+    _controller: '\Drupal\fgmc_forms\Controller\FgmcController::adminquickratessubmit'
+    _title: 'Admin Quick Rates Submit'
+  requirements:
+    _access: 'TRUE'
+fgmc_forms_whyusdetailsconfig:
+  path: 'admin/WhyusDetailsConfig'
+  defaults:
+    _controller: '\Drupal\fgmc_forms\Controller\FgmcController::editwhyusdetailsconfig'
+    _title: 'Why us Details Config Form'
+  requirements:
+    _permission: 'access content fgmc user'
+fgmc_forms_rateslandingconfig:
+  path: 'admin/ratesLandingConfig'
+  defaults:
+    _form: '\Drupal\fgmc_forms\Form\RatesLandingConfigForm'
+    _title: 'Rates Page Header'
+  requirements:
+    _permission: 'access content'
+fgmc_forms_admincalcconfig:
+  path: 'admin/admincalcconfig'
+  defaults:
+    _controller: '\Drupal\fgmc_forms\Controller\FgmcController::admincalcconfig'
+    _title: 'Admin Calculator Config'
+  requirements:
+   _access: 'TRUE'
+fgmc_forms_admincalcconfigsubmit:
+  path: 'admin/admincalcconfigsubmit'
+  defaults:
+    _controller: '\Drupal\fgmc_forms\Controller\FgmcController::admincalcconfigsubmit'
+    _title: 'Admin Calculator Config Submit'
+  requirements:
+    _access: 'TRUE'
+fgmc_forms_adminpmiconfig:
+  path: 'admin/adminpmiconfig'
+  defaults:
+    _controller: '\Drupal\fgmc_forms\Controller\FgmcController::adminpmiconfig'
+    _title: 'PMI Table Config'
+  requirements:
+   _access: 'TRUE'
+fgmc_forms_adminpmiconfigsubmit:
+  path: 'admin/adminpmiconfigsubmit'
+  defaults:
+    _controller: '\Drupal\fgmc_forms\Controller\FgmcController::adminpmiconfigsubmit'
+    _title: 'PMI Table Config Submit'
+  requirements:
+    _access: 'TRUE'
+fgmc_forms_adminhacalcconfigsubmit:
+  path: 'admin/adminhacalcconfigsubmit'
+  defaults:
+    _controller: '\Drupal\fgmc_forms\Controller\FgmcController::adminhacalcconfigsubmit'
+    _title: 'PMI Table Config Submit'
+  requirements:
+    _access: 'TRUE'
+fgmc_forms_adminarmconfig:
+  path: 'admin/adminarmconfig'
+  defaults:
+    _controller: '\Drupal\fgmc_forms\Controller\FgmcController::adminarmconfig'
+    _title: 'ARM Table Config'
+  requirements:
+   _access: 'TRUE'
+fgmc_forms_adminarmconfigsubmit:
+  path: 'admin/adminarmconfigsubmit'
+  defaults:
+    _controller: '\Drupal\fgmc_forms\Controller\FgmcController::adminarmconfigsubmit'
+    _title: 'ARM Table Config Submit'
+  requirements:
+    _access: 'TRUE'
+fgmc_forms_admintaxslabconfig:
+  path: 'admin/admintaxslabconfig'
+  defaults:
+    _controller: '\Drupal\fgmc_forms\Controller\FgmcController::admintaxslabconfig'
+    _title: 'Tax Slab Table Config'
+  requirements:
+   _access: 'TRUE'
+fgmc_forms_admintaxslabconfigsubmit:
+  path: 'admin/admintaxslabconfigsubmit'
+  defaults:
+    _controller: '\Drupal\fgmc_forms\Controller\FgmcController::admintaxslabconfigsubmit'
+    _title: 'Tax Slab Table Config Submit'
+  requirements:
+    _access: 'TRUE'
+fgmc_forms_jobemailconfig:
+  path: 'admin/jobemailconfig'
+  defaults:
+    _form: '\Drupal\fgmc_forms\Form\JobEmailConfigForm'
+    _title: 'Careers Recipient Email Config'
+  requirements:
+    _permission: 'access content'

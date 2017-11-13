@@ -1,0 +1,20 @@
+{% set displayType = node.hasField('field_block_display_type') ? node.get('field_block_display_type').value : '' %}
+{% set ContentType = node.getType() ? node.getType(): '' %}
+{% if logged_in_user_status == true and ishomepage == true %}
+    {% set nodeid = node.id() %}
+    {% if displayType == 'rates' %}
+        <div class="edit_homesections"><a href="/node/{{ nodeid }}/edit?destination=/home"><span class="glyphicon glyphicon-pencil"></span> Edit Rates</a></div>
+    {% elseif displayType == 'rates_and_terms' %}
+        <div class="edit_homesections"><a href="/node/{{ nodeid }}/edit?destination=/home"><span class="glyphicon glyphicon-pencil"></span> Edit Products</a></div>
+    {% elseif displayType == 'our_goal' %}
+        <div class="edit_homesections whygm_section"><a href="/node/{{ nodeid }}/edit?destination=/home"><span class="glyphicon glyphicon-pencil"></span> Edit Why GM</a></div>
+    {% elseif displayType == 'career' %}
+        <div class="edit_homesections"><a href="/node/{{ nodeid }}/edit?destination=/home"><span class="glyphicon glyphicon-pencil"></span> Edit Careers</a></div>
+    {% elseif ContentType == 'banner' %}
+        <div class="edit_homesections"><a href="/node/{{ nodeid }}/edit?destination=/home"><span class="glyphicon glyphicon-pencil"></span> Edit Banner</a></div>
+    {% endif %}
+{% endif%}
+{% for item in items %}
+     
+	 {{item.content['#text']|raw}}
+{% endfor %}

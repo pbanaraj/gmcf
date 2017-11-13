@@ -1,0 +1,5 @@
+name: preview
+type: module
+description: The module generate the preview for the page
+core: 8.x
+package: custom

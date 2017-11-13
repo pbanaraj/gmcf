@@ -1,0 +1,39 @@
+{# Default Values #}
+{#
+/**
+ * Available variables
+ * 
+ * items - to access nodes item.content['#node']
+ * parentNode
+ * columns
+ */
+
+#}
+<div class="row">
+  {% for item in items %}
+    {#node#}
+    {% set node = item.content['#node'] %}
+    {% if node.bundle() == 'why_us' %}
+      {#Icon URL#}
+      {% set iconUrl = '' %}
+      {% if node.hasField('field_why_us_type_icon') and node.field_why_us_type_icon is not empty %}
+        {% set iconUrl =  file_url(node.field_why_us_type_icon.entity.uri.value) %}
+      {% endif %}
+      {#Why Us Data#}
+      {% set whyUsData = (node.hasField('field_why_us_data')) ? node.field_why_us_data.value : '' %}
+      <div class="col-md-4 padd40 text-center">
+        <div class="col">
+          <p>
+            {{node.title.value | raw}}
+          </p>									
+          <span class="custm">
+            <img src="{{iconUrl}}"> 
+          </span>
+          <h5>
+            {{whyUsData}}
+          </h5>
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

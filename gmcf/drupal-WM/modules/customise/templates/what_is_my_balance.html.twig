@@ -1,0 +1,15 @@
+{{ attach_library('customise/customise.calculators_barchart_js') }}
+{{ attach_library('customise/customise.calculators_css') }}
+<style type="text/less">
+{{name.node_css | raw}}
+</style>
+{{name.body | raw}}
+
+<input type="hidden" class="calculator_config_values" value="{{name.calcconfig_values | json_encode()}}" />
+<input type="hidden" class="calculator_loan_term" value="{{name.loan_term | json_encode()}}" />
+<input type="hidden" class="pmi_factorA" value="{{name.factorA | json_encode()}}" />
+<input type="hidden" class="pmi_factorB" value="{{name.factorB | json_encode()}}" />
+
+<script type="text/javascript">
+      {{name.node_js | raw}}
+</script> 

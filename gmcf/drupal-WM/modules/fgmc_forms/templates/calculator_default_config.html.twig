@@ -1,0 +1,469 @@
+{{ attach_library('fgmc_forms/fgmc_forms.confirm') }}
+{{ attach_library('fgmc_forms/fgmc_forms_custom_css') }}
+<form method="POST" action="{{path('fgmc_forms_admincalcconfigsubmit')}}" id="calc_config_form">
+<table class="table">
+    <thead>
+      <tr>
+      	<th>Calculator fields</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+		<th>Helptext Value</th>
+      </tr>
+    </thead>
+	
+    <tbody>
+      <tr>
+        <td>Home Value</td>
+		<td><input type="text" id="HM_default_value" name="HM_default_value" required value="{{data.calcconfig_values.HM_default_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="HM_min_value" name="HM_min_value" required value="{{data.calcconfig_values.HM_min_value}}" min="1"onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="HM_max_value" name="HM_max_value" required value="{{data.calcconfig_values.HM_max_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>  
+		<td><textarea id="HM_helptext_value" name="HM_helptext_value" required>{{data.calcconfig_values.HM_helptext_value}}</textarea></td>   
+      </tr>
+      <tr>
+        <td>Loan Amount</td>
+		<td><input type="text" id="LA_default_value" name="LA_default_value" required value="{{data.calcconfig_values.LA_default_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="LA_min_value" name="LA_min_value" required value="{{data.calcconfig_values.LA_min_value}}" min="1"  maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="LA_max_value" name="LA_max_value" required value="{{data.calcconfig_values.LA_max_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="LA_helptext_value" name="LA_helptext_value" required>{{data.calcconfig_values.LA_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+
+       <td>Down Payment Percentage</td>
+		<td><input type="text" class="ins_rate_number per_field" id="DP_per_default_value" name="DP_per_default_value" required value="{{data.calcconfig_values.DP_per_default_value}}" /></td>
+        <td><input type="text" class="ins_rate_number per_field" id="DP_per_min_value" name="DP_per_min_value" required value="{{data.calcconfig_values.DP_per_min_value}}" /></td>
+        <td><input type="text" class="ins_rate_number per_field" id="DP_per_max_value" name="DP_per_max_value" required value="{{data.calcconfig_values.DP_per_max_value}}" /></td>
+		<td><textarea id="DP_per_helptext_value" name="DP_per_helptext_value" required>{{data.calcconfig_values.DP_per_helptext_value}}</textarea></td>
+		</tr>
+		<tr>
+        <td>Loan Term (30 years)</td>
+		<td>&nbsp;<input type="hidden" id="LT_default_value" name="LT_default_value" value="30" />
+		<!--
+		<select id="LT_default_value" name="LT_default_value" required>
+			{% for key_lt, val_lt in data.loan_term %}	
+				{% if data.calcconfig_values.LT_default_value == key_lt %}
+					{% set selected_lt = "selected" %}
+				{% else %}
+					{% set selected_lt = "" %}	
+				{% endif %}
+				<option value="{{key_lt}}" {{selected_lt}}>{{val_lt}}</option>
+			{% endfor %}
+		</select>
+		-->
+		</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="LT_helptext_value" name="LT_helptext_value" required>{{data.calcconfig_values.LT_helptext_value}}</textarea></td>
+      </tr>
+      
+      	  <tr>
+        <td>Interest Rate (%)</td>
+		<td><input type="text" class="ins_rate_number per_field"id="IR_default_value" name="IR_default_value" required value="{{data.calcconfig_values.IR_default_value}}" step="0.01" /></td>
+        <td><input type="text" class="ins_rate_number per_field" id="IR_min_value" name="IR_min_value" required value="{{data.calcconfig_values.IR_min_value}}" step="0.01" /></td>
+        <td><input type="text" class="ins_rate_number per_field" id="IR_max_value" name="IR_max_value" required value="{{data.calcconfig_values.IR_max_value}}" step="0.01" /></td>
+		<td><textarea id="IR_helptext_value" name="IR_helptext_value" required>{{data.calcconfig_values.IR_helptext_value}}</textarea></td>
+      </tr>
+      
+     <tr>
+       <td>Down Payment Amount</td>
+		<td><input type="text" id="DP_default_value" name="DP_default_value" required value="{{data.calcconfig_values.DP_default_value}}" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="DP_min_value" name="DP_min_value" required value="{{data.calcconfig_values.DP_min_value}}" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="DP_max_value" name="DP_max_value" required value="{{data.calcconfig_values.DP_max_value}}" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="DP_helptext_value" name="DP_helptext_value" required>{{data.calcconfig_values.DP_helptext_value}}</textarea></td>
+      </tr>
+     <tr>
+        <td>Annual Property Insurance (%)</td>
+		<td><input type="text" class="ins_rate_number per_field" id="API_default_value" name="API_default_value" required value="{{data.calcconfig_values.API_default_value}}" /></td>
+        <td><input type="text" class="ins_rate_number per_field" id="API_min_value" name="API_min_value" required value="{{data.calcconfig_values.API_min_value}}" /></td>
+        <td><input type="text" class="ins_rate_number per_field" id="API_max_value" name="API_max_value" required value="{{data.calcconfig_values.API_max_value}}" /></td>
+		<td><textarea id="API_helptext_value" name="API_helptext_value" required>{{data.calcconfig_values.API_helptext_value}}</textarea></td>
+      </tr>
+     <tr>
+        <td>Annual Property Tax (%)</td>
+		<td><input type="text" class="ins_rate_number per_field" id="APT_default_value" name="APT_default_value" required value="{{data.calcconfig_values.APT_default_value}}" /></td>
+        <td><input type="text" class="ins_rate_number per_field" id="APT_min_value" name="APT_min_value" required value="{{data.calcconfig_values.APT_min_value}}" /></td>
+        <td><input type="text" class="ins_rate_number per_field" id="APT_max_value" name="APT_max_value" required value="{{data.calcconfig_values.APT_max_value}}" /></td>
+		<td><textarea id="APT_helptext_value" name="APT_helptext_value" required>{{data.calcconfig_values.APT_helptext_value}}</textarea></td>
+      </tr>
+     <tr>
+        <td>Principal</td>
+		<td><input type="text" id="PR_default_value" name="PR_default_value" required value="{{data.calcconfig_values.PR_default_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="PR_min_value" name="PR_min_value" required value="{{data.calcconfig_values.PR_min_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="PR_max_value" name="PR_max_value" required value="{{data.calcconfig_values.PR_max_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="PR_helptext_value" name="PR_helptext_value" required>{{data.calcconfig_values.PR_helptext_value}}</textarea></td>
+      </tr>
+     <tr>
+        <td>No.of payments made (or) Show the balance after</td>
+		<td><input type="text" id="NPM_default_value" name="NPM_default_value" required value="{{data.calcconfig_values.NPM_default_value}}" min="1" maxlength="3" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="NPM_min_value" name="NPM_min_value" required value="{{data.calcconfig_values.NPM_min_value}}" min="1" maxlength="3" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="NPM_max_value" name="NPM_max_value" required value="{{data.calcconfig_values.NPM_max_value}}" min="1" maxlength="3" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="NPM_helptext_value" name="NPM_helptext_value" required>{{data.calcconfig_values.NPM_helptext_value}}</textarea></td>
+      </tr>
+     <tr>
+        <td>Monthly P & I Payment</td>
+		<td><input type="text" id="MPIP_default_value" name="MPIP_default_value" required value="{{data.calcconfig_values.MPIP_default_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="MPIP_min_value" name="MPIP_min_value" required value="{{data.calcconfig_values.MPIP_min_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="MPIP_max_value" name="MPIP_max_value" required value="{{data.calcconfig_values.MPIP_max_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="MPIP_helptext_value" name="MPIP_helptext_value" required>{{data.calcconfig_values.MPIP_helptext_value}}</textarea></td>
+      </tr>	  
+	  <tr>
+        <td>Closing Cost (%)</td>
+		<td><input type="text" id="CCA_default_value" name="CCA_default_value" required value="{{data.calcconfig_values.CCA_default_value}}" maxlength="2" onkeypress="return isNumber(event)" /></td>
+        <td><input type="text" id="CCA_min_value" name="CCA_min_value" required value="{{data.calcconfig_values.CCA_min_value}}" maxlength="2" onkeypress="return isNumber(event)" /></td>
+        <td><input type="text" id="CCA_max_value" name="CCA_max_value" required value="{{data.calcconfig_values.CCA_max_value}}" maxlength="2" onkeypress="return isNumber(event)" /></td>
+		<td><textarea id="CCA_helptext_value" name="CCA_helptext_value" required>{{data.calcconfig_values.CCA_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Extra Principal</td>
+		<td><input type="text" id="EXP_default_value" name="EXP_default_value" required value="{{data.calcconfig_values.EXP_default_value}}" onkeypress="return isNumber(event)"/></td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="EXP_helptext_value" name="EXP_helptext_value" required>{{data.calcconfig_values.EXP_helptext_value}}</textarea></td>
+      </tr>
+
+	  <tr>
+        <td>Remaining Term</td>
+		<td><input type="text" id="RT_default_value" name="RT_default_value" required value="{{data.calcconfig_values.RT_default_value}}" min="1" maxlength="3" onkeypress="return isNumber(event)"/></td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="RT_helptext_value" name="RT_helptext_value" required>{{data.calcconfig_values.RT_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Gross Income</td>
+		<td><input type="text" id="GI_default_value" name="GI_default_value" required value="{{data.calcconfig_values.GI_default_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="GI_min_value" name="GI_min_value" required value="{{data.calcconfig_values.GI_min_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="GI_max_value" name="GI_max_value" required value="{{data.calcconfig_values.GI_max_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="GI_helptext_value" name="GI_helptext_value" required>{{data.calcconfig_values.GI_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>First Mortgage Current Balance</td>
+        <td><input type="text" id="CMB_default_value" name="CMB_default_value" required value="{{data.calcconfig_values.CMB_default_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="CMB_min_value" name="CMB_min_value" required value="{{data.calcconfig_values.CMB_min_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="CMB_max_value" name="CMB_max_value" required value="{{data.calcconfig_values.CMB_max_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="CMB_helptext_value" name="CMB_helptext_value" required>{{data.calcconfig_values.CMB_helptext_value}}</textarea></td>
+      </tr>
+      <tr>
+        <td>Second Mortgage Current Balance</td>
+        <td>&nbsp;</td>                           
+        <td><input type="text" id="CMB2_min_value" name="CMB2_min_value" required value="{{data.calcconfig_values.CMB2_min_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="CMB2_max_value" name="CMB2_max_value" required value="{{data.calcconfig_values.CMB2_max_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="CMB2_helptext_value" name="CMB2_helptext_value" required>{{data.calcconfig_values.CMB2_helptext_value}}</textarea></td>
+      </tr>	  
+	  <tr>
+        <td>First Mortgage Interest Rate</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="FMI_helptext_value" name="FMI_helptext_value" required>{{data.calcconfig_values.FMI_helptext_value}}</textarea></td>
+      </tr>
+      <tr>
+        <td>Second Mortgage Interest Rate</td>
+        <td>&nbsp;</td>                           
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="SMI_helptext_value" name="SMI_helptext_value" required>{{data.calcconfig_values.SMI_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>First Mortgage Remaining</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="FMR_helptext_value" name="FMR_helptext_value" required>{{data.calcconfig_values.FMR_helptext_value}}</textarea></td>
+      </tr>
+      <tr>
+        <td>Second Mortgage Remaining</td>
+        <td>&nbsp;</td>                           
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="SMR_helptext_value" name="SMR_helptext_value" required>{{data.calcconfig_values.SMR_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Monthly Debt Payment</td>
+        <td>&nbsp;</td>                           
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="MDebtP_helptext_value" name="MDebtP_helptext_value" required>{{data.calcconfig_values.MDebtP_helptext_value}}</textarea></td>
+      </tr>	  
+	  <tr>
+        <td>Monthly HOA Fees</td>
+        <td><input type="text" id="HOA_default_value" name="HOA_default_value" required value="{{data.calcconfig_values.HOA_default_value}}" maxlength="9" onkeypress="return isNumber(event)"/></td>                      
+        <td><input type="text" id="HOA_min_value" name="HOA_min_value" required value="{{data.calcconfig_values.HOA_min_value}}" maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="HOA_max_value" name="HOA_max_value" required value="{{data.calcconfig_values.HOA_max_value}}" maxlength="9" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="HOA_helptext_value" name="HOA_helptext_value" required>{{data.calcconfig_values.HOA_helptext_value}}</textarea></td>
+      </tr>
+	  
+	  <tr>
+        <td>Annual Property Insurance (%) for How Much Home Can I Afford Calculator </td>
+		<td><input type="text" class="ins_rate_number per_field" id="HA_API_default_value" name="HA_API_default_value" required value="{{data.calcconfig_values.HA_API_default_value}}" /></td>
+        <td><input type="text" class="ins_rate_number per_field" id="HA_API_min_value" name="HA_API_min_value" required value="{{data.calcconfig_values.HA_API_min_value}}" /></td>
+        <td><input type="text" class="ins_rate_number per_field" id="HA_API_max_value" name="HA_API_max_value" required value="{{data.calcconfig_values.HA_API_max_value}}" /></td>
+		<td><textarea id="HA_API_helptext_value" name="HA_API_helptext_value" required>{{data.calcconfig_values.HA_API_helptext_value}}</textarea></td>
+      </tr>
+     <tr>
+        <td>Annual Property Tax (%) for How Much Home Can I Afford Calculator</td>
+		<td><input type="text" class="ins_rate_number per_field" id="HA_APT_default_value" name="HA_APT_default_value" required value="{{data.calcconfig_values.HA_APT_default_value}}" /></td>
+        <td><input type="text" class="ins_rate_number per_field" id="HA_APT_min_value" name="HA_APT_min_value" required value="{{data.calcconfig_values.HA_APT_min_value}}" /></td>
+        <td><input type="text" class="ins_rate_number per_field" id="HA_APT_max_value" name="HA_APT_max_value" required value="{{data.calcconfig_values.HA_APT_max_value}}" /></td>
+		<td><textarea id="HA_APT_helptext_value" name="HA_APT_helptext_value" required>{{data.calcconfig_values.HA_APT_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Refinance Closing Cost</td>
+		<td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="RCC_helptext_value" name="RCC_helptext_value" required>{{data.calcconfig_values.RCC_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Remaining Terms in months</td>
+		<td><input type="text" id="RTM_default_value" name="RTM_default_value" required value="{{data.calcconfig_values.RTM_default_value}}" min="1" maxlength="3" onkeypress="return isNumber(event)"/></td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="RTM_helptext_value" name="RTM_helptext_value" required>{{data.calcconfig_values.RTM_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Monthly Rental</td>
+        <td><input type="text" id="MR_default_value" name="MR_default_value" required value="{{data.calcconfig_values.MR_default_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>                      
+        <td><input type="text" id="MR_min_value" name="MR_min_value" required value="{{data.calcconfig_values.MR_min_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="MR_max_value" name="MR_max_value" required value="{{data.calcconfig_values.MR_max_value}}" min="1" maxlength="9" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="MR_helptext_value" name="MR_helptext_value" required>{{data.calcconfig_values.MR_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Rent Increase Yearly</td>
+        <td><input type="text" id="RIA_default_value" name="RIA_default_value" required value="{{data.calcconfig_values.RIA_default_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>                      
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="RIA_helptext_value" name="RIA_helptext_value" required>{{data.calcconfig_values.RIA_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Inflation</td>
+        <td><input type="text" id="IF_default_value" name="IF_default_value" required value="{{data.calcconfig_values.IF_default_value}}" max="100" maxlength="3" onkeypress="return isNumber(event)"/></td>                      
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="IF_helptext_value" name="IF_helptext_value" required>{{data.calcconfig_values.IF_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Annual Home Appreciation</td>
+        <td><input type="text" id="AHA_default_value" name="AHA_default_value" required value="{{data.calcconfig_values.AHA_default_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>                      
+        <td><input type="text" id="AHA_min_value" name="AHA_min_value" required value="{{data.calcconfig_values.AHA_min_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="AHA_max_value" name="AHA_max_value" required value="{{data.calcconfig_values.AHA_max_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="AHA_helptext_value" name="AHA_helptext_value" required>{{data.calcconfig_values.AHA_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Monthly expenses/Maintenance fees</td>
+        <td><input type="text" id="ME_default_value" name="ME_default_value" required value="{{data.calcconfig_values.ME_default_value}}" maxlength="9" onkeypress="return isNumber(event)"/></td>                      
+        <td><input type="text" id="ME_min_value" name="ME_min_value" required value="{{data.calcconfig_values.ME_min_value}}" maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="ME_max_value" name="ME_max_value" required value="{{data.calcconfig_values.ME_max_value}}" maxlength="9" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="ME_helptext_value" name="ME_helptext_value" required>{{data.calcconfig_values.ME_helptext_value}}</textarea></td>
+      </tr>
+
+	  <tr>
+        <td>Years you plan to stay in home</td>
+        <td><input type="text" id="YPTS_default_value" name="YPTS_default_value" required value="{{data.calcconfig_values.YPTS_default_value}}" min="1" maxlength="3" onkeypress="return isNumber(event)"/></td>                      
+        <td><input type="text" id="YPTS_min_value" name="YPTS_min_value" required value="{{data.calcconfig_values.YPTS_min_value}}" min="1" maxlength="3" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="YPTS_max_value" name="YPTS_max_value" required value="{{data.calcconfig_values.YPTS_max_value}}" min="1" maxlength="3" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="YPTS_helptext_value" name="YPTS_helptext_value" required>{{data.calcconfig_values.YPTS_helptext_value}}</textarea></td>
+      </tr>
+	   <tr>
+        <td>Current Federal Income Tax </td>
+        <td><input type="text" id="CFIT_default_value" name="CFIT_default_value" required value="{{data.calcconfig_values.CFIT_default_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="CFIT_min_value" name="CFIT_min_value" required value="{{data.calcconfig_values.CFIT_min_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="CFIT_max_value" name="CFIT_max_value" required value="{{data.calcconfig_values.CFIT_max_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="CFIT_helptext_value" name="CFIT_helptext_value" required>{{data.calcconfig_values.CFIT_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Current State Income Tax</td>
+        <td><input type="text" id="CSIT_default_value" name="CSIT_default_value" required value="{{data.calcconfig_values.CSIT_default_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="CSIT_min_value" name="CSIT_min_value" required value="{{data.calcconfig_values.CSIT_min_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="CSIT_max_value" name="CSIT_max_value" required value="{{data.calcconfig_values.CSIT_max_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="CSIT_helptext_value" name="CSIT_helptext_value" required>{{data.calcconfig_values.CSIT_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Rate of return on Down payment</td>
+        <td><input type="text" id="RRDP_default_value" name="RRDP_default_value" required value="{{data.calcconfig_values.RRDP_default_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="RRDP_min_value" name="RRDP_min_value" required value="{{data.calcconfig_values.RRDP_min_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="RRDP_max_value" name="RRDP_max_value" required value="{{data.calcconfig_values.RRDP_max_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="RRDP_helptext_value" name="RRDP_helptext_value" required>{{data.calcconfig_values.RRDP_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Private Mortgage Insureance</td>
+        <td><input type="text" class="ins_rate_number per_field" id="PMI_default_value" name="PMI_default_value" required value="{{data.calcconfig_values.PMI_default_value}}" /></td>
+        <td><input type="text" class="ins_rate_number per_field" id="PMI_min_value" name="PMI_min_value" required value="{{data.calcconfig_values.PMI_min_value}}" /></td>
+        <td><input type="text" class="ins_rate_number per_field" id="PMI_max_value" name="PMI_max_value" required value="{{data.calcconfig_values.PMI_max_value}}" /></td>
+		<td><textarea id="PMI_helptext_value" name="PMI_helptext_value" required>{{data.calcconfig_values.PMI_helptext_value}}</textarea></td>
+	</tr>
+	   <tr>
+        <td>Original Loan Balance</td>
+        <td><input type="text" id="OLB_default_value" name="OLB_default_value" required value="{{data.calcconfig_values.OLB_default_value}}" min="10001" maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="OLB_min_value" name="OLB_min_value" required value="{{data.calcconfig_values.OLB_min_value}}" min="10001" maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="OLB_max_value" name="OLB_max_value" required value="{{data.calcconfig_values.OLB_max_value}}" min="10001" maxlength="9" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="OLB_helptext_value" name="OLB_helptext_value" required>{{data.calcconfig_values.OLB_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Customer Name</td>
+		<td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="CNM_helptext_value" name="CNM_helptext_value" required>{{data.calcconfig_values.CNM_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Loan Term(in months)</td>
+        <td><input type="text" id="LTIM_default_value" name="LTIM_default_value" required value="{{data.calcconfig_values.LTIM_default_value}}" min="1" maxlength="3" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="LTIM_min_value" name="LTIM_min_value" required value="{{data.calcconfig_values.LTIM_min_value}}" min="1" maxlength="3" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="LTIM_max_value" name="LTIM_max_value" required value="{{data.calcconfig_values.LTIM_max_value}}" min="1" maxlength="3" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="LTIM_helptext_value" name="LTIM_helptext_value" required>{{data.calcconfig_values.LTIM_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Compounding Interval</td>
+		<td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="COMPI_helptext_value" name="COMPI_helptext_value" required>{{data.calcconfig_values.COMPI_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Loan Start Date</td>
+		<td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="LSD_helptext_value" name="LSD_helptext_value" required>{{data.calcconfig_values.LSD_helptext_value}}</textarea></td>
+
+      </tr>
+	  <tr>
+        <td>Approx Tax refund from IRS and State</td>
+		<td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="ATRefund_helptext_value" name="ATRefund_helptext_value" required>{{data.calcconfig_values.ATRefund_helptext_value}}</textarea></td>
+
+      </tr>
+	  <tr>
+        <td>Montly Payment Owning</td>
+		<td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="MPOwning_helptext_value" name="MPOwning_helptext_value" required>{{data.calcconfig_values.MPOwning_helptext_value}}</textarea></td>
+
+      </tr>
+	  <tr>
+        <td>Monthly Renting Expenses</td>
+		<td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="MRExpenses_helptext_value" name="MRExpenses_helptext_value" required>{{data.calcconfig_values.MRExpenses_helptext_value}}</textarea></td>
+
+      </tr>
+        <tr>
+        <td>Desired Length of Mortgage (in years)</td>
+        <td>
+			<select id="DLM_default_value" name="DLM_default_value" required>
+				{% for key_dlt, val_dlt in data.desired_loan_term %}	
+					{% if data.calcconfig_values.DLM_default_value == key_dlt %}
+						{% set selected_dlt = "selected" %}
+					{% else %}
+						{% set selected_dlt = "" %}	
+					{% endif %}
+					<option value="{{key_dlt}}" {{selected_dlt}}>{{val_dlt}}</option>
+				{% endfor %}
+			</select>
+			<input type="hidden" id="DLM_default_value1" value="{{data.calcconfig_values.DLM_default_value}}" />
+		</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="DLM_helptext_value" name="DLM_helptext_value" required>{{data.calcconfig_values.DLM_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Years before sell/pay off loan</td>
+        <td><input type="text" id="YBSP_default_value" name="YBSP_default_value" required value="{{data.calcconfig_values.YBSP_default_value}}" maxlength="3" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="YBSP_min_value" name="YBSP_min_value" required value="{{data.calcconfig_values.YBSP_min_value}}" maxlength="3" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="YBSP_max_value" name="YBSP_max_value" required value="{{data.calcconfig_values.YBSP_max_value}}" maxlength="3" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="YBSP_helptext_value" name="YBSP_helptext_value" required>{{data.calcconfig_values.YBSP_helptext_value}}</textarea></td>
+      </tr>
+	  <tr>
+        <td>Disount Less Points</td>
+        <td><input type="text" id="DISPSL_default_value" name="DISPSL_default_value" required value="{{data.calcconfig_values.DISPSL_default_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="DISPSL_min_value" name="DISPSL_min_value" required value="{{data.calcconfig_values.DISPSL_min_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="DISPSL_max_value" name="DISPSL_max_value" required value="{{data.calcconfig_values.DISPSL_max_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="DISPSL_helptext_value" name="DISPSL_helptext_value" required>{{data.calcconfig_values.DISPSL_helptext_value}}</textarea></td>
+	</tr>
+	<tr>
+        <td>Disount More Points</td>
+        <td><input type="text" id="DISPSM_default_value" name="DISPSM_default_value" required value="{{data.calcconfig_values.DISPSM_default_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="DISPSM_min_value" name="DISPSM_min_value" required value="{{data.calcconfig_values.DISPSM_min_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="DISPSM_max_value" name="DISPSM_max_value" required value="{{data.calcconfig_values.DISPSM_max_value}}" maxlength="2" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="DISPSM_helptext_value" name="DISPSM_helptext_value" required>{{data.calcconfig_values.DISPSM_helptext_value}}</textarea></td>
+	</tr>
+	<tr>
+        <td>Loan Cost</td>
+        <td><input type="text" id="LNCS_default_value" name="LNCS_default_value" required value="{{data.calcconfig_values.LNCS_default_value}}" maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="LNCS_min_value" name="LNCS_min_value" required value="{{data.calcconfig_values.LNCS_min_value}}" maxlength="9" onkeypress="return isNumber(event)"/></td>
+        <td><input type="text" id="LNCS_max_value" name="LNCS_max_value" required value="{{data.calcconfig_values.LNCS_max_value}}" maxlength="9" onkeypress="return isNumber(event)"/></td>
+		<td><textarea id="LNCS_helptext_value" name="LNCS_helptext_value" required>{{data.calcconfig_values.LNCS_helptext_value}}</textarea></td>
+	</tr>
+	<tr>
+        <td>Loan Amount (Compare my cost of owning vs renting with same payment)</td>
+		<td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="ROPMT_LA_helptext_value" name="ROPMT_LA_helptext_value" required>{{data.calcconfig_values.ROPMT_LA_helptext_value}}</textarea></td>
+
+      </tr>
+	  <tr>
+        <td>Loan Type</td>
+		<td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+		<td><textarea id="LNTYPE_helptext_value" name="LNTYPE_helptext_value" required>{{data.calcconfig_values.LNTYPE_helptext_value}}</textarea></td>
+
+      </tr>
+	  </tbody>
+  </table>
+  <div><input type="submit" value="Save Config" /></div>
+  </form>
+  <h2>How Much Home Can I Afford Calculator Config</h2>
+  <form method="POST" action="{{path('fgmc_forms_adminhacalcconfigsubmit')}}">
+    <table class="table">
+    <thead>
+      <tr>
+      	<th>Down Payment Percentage 1</th>
+        <th>Down Payment Percentage 2</th>
+        <th>Down Payment Percentage 3</th>
+        <th>Elibile Ratio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input type="text" class="ins_rate_number" id="DP_percentage_first" name="DP_percentage_first" required value="{{data.ha_calcconfig_values.DP_percentage_first}}" /></td>
+		<td><input type="text" class="ins_rate_number" id="DP_percentage_second" name="DP_percentage_second" required value="{{data.ha_calcconfig_values.DP_percentage_second}}" /></td>
+        <td><input type="text" class="ins_rate_number" id="DP_percentage_third" name="DP_percentage_third" required value="{{data.ha_calcconfig_values.DP_percentage_third}}" /></td>
+        <td><input type="text" class="ins_rate_number" id="ELB_ratio" name="ELB_ratio" required value="{{data.ha_calcconfig_values.ELB_ratio}}" /></td>       
+      </tr>
+	  </tbody>
+     </table>
+  
+  
+      
+ 
+      
+  <h2>Default Interest Rate: Payment Comparison Tool</h2>
+    <table class="table">
+    <thead>
+      <tr>
+      	<th>30 Year Interest Rate</th>
+        <th>20 Year Interest Rate</th>
+        <th>15 Year Interest Rate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input type="text" class="ins_rate_number" id="INT_rate_30" name="INT_rate_30" required value="{{data.defa_rates[30]?data.defa_rates[30]:data.ha_calcconfig_values.INT_rate_30}}" /></td>
+		<td><input type="text" class="ins_rate_number" id="INT_rate_20" name="INT_rate_20" required value="{{data.defa_rates[20]?data.defa_rates[20]:data.ha_calcconfig_values.INT_rate_20}}" /></td>
+        <td><input type="text" class="ins_rate_number" id="INT_rate_15" name="INT_rate_15" required value="{{data.defa_rates[15]?data.defa_rates[15]:data.ha_calcconfig_values.INT_rate_15}}" /></td>
+      </tr>
+	  </tbody>
+     </table>
+  <div><input type="submit" value="Save Config" /></div>
+  </form>
+      
+      
+ <script type="text/javascript">
+      var defa_rates = '{{data.defa_rates | json_encode | raw }}';
+</script> 

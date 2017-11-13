@@ -1,0 +1,55 @@
+{% set replace_value_var= '&nbsp;' %}
+{% set replace_with_value_var = '' %} 
+{% if page == 'inner'  %}
+    <div class="col-md-8 col-sm-6 col-xs-4">
+        <ul class="loginNav text-right">
+		    <li class="mobile-wrap mob-contact hidden-md hidden-lg">
+                            <a href="tel:+{{ph_number | striptags | replace({ (replace_value_var): replace_with_value_var }) }}">{{ph_icon | raw}}</a>
+                    </li>
+					
+                    <li class="mobile-wrap desk-contact hidden-sm hidden-xs">
+                            {{ph_icon | raw}} {{ph_number | raw}}
+                    </li>
+					
+                    <li class="login-wrap hidden-sm hidden-xs">
+                            <button class="btn btn-success applybutton">Apply</button>
+                    </li>
+                    <li class="login-wrap hidden-sm hidden-xs">
+                            <button class="btn btn-success signin">Sign In</button>
+                    </li>                    
+		   <li class="search-btn">
+                            <a href="#" id="search" class="searchIcon"></a>
+                    </li>
+            </ul>			
+    </div>
+ {% elseif page == 'front' %}
+     <div class="col-md-8 col-sm-6 col-xs-4">
+        <ul class="loginNav text-right">
+                <li class="mobile-wrap mob-contact hidden-md hidden-lg">
+                        <a href="tel:+{{ph_number | striptags | replace({ (replace_value_var): replace_with_value_var }) }}">{{ph_icon | raw}}</a>
+                </li>
+                                
+                <li class="mobile-wrap desk-contact hidden-sm hidden-xs">
+                        {{ph_icon | raw}} {{ph_number | raw}}
+                </li>
+                <li class="login-wrap hidden-sm hidden-xs">
+                        <button class="btn btn-success signin">Sign In</button>
+                </li>                
+                <li class="search-btn">
+                            <a href="#" id="search" class="searchIcon"></a>
+                </li>
+        </ul>
+    </div>
+ {% else %}
+     
+ {% endif %}
+ <div class="mob-search" style="display:none">
+  <form action="/search" method="get" id="search-block-form" accept-charset="UTF-8" data-drupal-form-fields="edit-keys--2">
+	 <div class="input-group"> 
+        
+                <input placeholder="Type here..." data-drupal-selector="edit-keys" id="header_search_term" name="search_key" value="" maxlength="128" class="form-control" type="text" required oninvalid="this.setCustomValidity('Please enter search keyword.')" oninput="setCustomValidity('')" />
+                <span class="input-group-btn"><button class="btn btn-secondary" type="submit">Search</button></span>
+      
+	 </div>
+           </form>
+ </div>

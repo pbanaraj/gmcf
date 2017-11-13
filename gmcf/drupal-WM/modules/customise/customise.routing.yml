@@ -1,0 +1,424 @@
+#customise.product_details:
+#  path: '/products/{arg}'
+#  defaults:
+#    _controller: '\Drupal\customise\Controller\CustomiseController::product_details'
+#    _title: 'Products'
+#  options:
+#     no_cache: TRUE
+#  requirements:
+#     _access: 'TRUE'
+#customise.all_product_details:
+#  path: '/products'
+#  defaults:
+#    _controller: '\Drupal\customise\Controller\CustomiseController::all_product_details'
+#    _title: 'Products'
+#  options:
+#     no_cache: TRUE
+#  requirements:
+#     _access: 'TRUE'
+customise.quick_rate_landing:
+  path: '/quick_rate_landing'
+  defaults:
+    _controller: '\Drupal\customise\Controller\QuickRateController::quick_rate_landing'
+    _title: 'Quick Rates'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.why-goodmortgage:
+  path: '/why-goodmortgage'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::why_goodmortgage'
+    _title: 'Why Goodmortgage'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.why-goodmortgage-ajax:
+  path: '/why_goodmortgage_ajax'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::whyus_testimonials'
+    _title: 'Why Goodmortgage'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.about-us:
+  path: '/about-us'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::about_us'
+    _title: 'About us'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.aboutus_leaders_ajax:
+  path: '/aboutus_leaders_ajax'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::aboutus_leaders_ajax'
+    _title: 'About us'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.quick_rate_submit:
+  path: '/quick_rate_submit'
+  defaults:
+    _controller: '\Drupal\customise\Controller\QuickRateController::quick_rate_submit'
+    _title: 'Quick Rates Submit'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'	 
+customise.quick_rate_sort:
+  path: '/quick_rate_sort'
+  defaults:
+    _controller: '\Drupal\customise\Controller\QuickRateController::quick_rate_sort'
+    _title: 'Quick Rates Sort'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.testimonial_info:
+  path: '/testimonial_info'
+  defaults:
+    _controller: '\Drupal\customise\Controller\QuickRateController::testimonial_info'
+    _title: 'Testimonial Info'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.products_info:
+  path: '/products_info'
+  defaults:
+    _controller: '\Drupal\customise\Controller\QuickRateController::products_info'
+    _title: 'Products Info'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.mortgage_school_detail:
+  path: '/mortgage_school_detail'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::mortgage_school_detail'
+    _title: 'Mortgage School'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.mortgage_school_tiles_ajax:
+  path: '/mortgage_school_tiles_ajax'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::mortgage_school_tiles'
+    _title: 'Mortgage School Tiles'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.mortgage_school_search:
+  path: '/mortgage_school_search'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::mortgage_school_search'
+    _title: 'Mortgage School Search'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.mortgage_school_sections_detail:
+  path: '/mortgage_school_sections_detail/{collapse}'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::mortgage_school_sections_detail'
+    _title: 'Mortgage School Sections'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+     collapse: .+
+customise.mortgage_school_sections_ajax:
+  path: '/mortgage_school_sections_ajax'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::mortgage_school_sections'
+    _title: 'Mortgage School Sections'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.mortgage_school_sections_send_mail:
+  path: '/mortgage_school_sections_send_mail'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::mortgage_school_sections_send_mail'
+    _title: 'Mortgage School Sections Send Mail'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.calculate_payment_taxes_insurance:
+  path: '/calculate_payment_taxes_insurance'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::calculate_payment_taxes_insurance'
+    _title: 'Payment with Taxes and Insurance'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.calculate_refinance:
+  path: '/calculate_refinance'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::calculate_refinance'
+    _title: 'Should I Refinance'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.loan_payment_calc:
+  path: '/loan_payment_calc'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::loan_payment_calc'
+    _title: 'Loan payment calculator'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+
+customise.calculate_debt_consolidate:
+  path: '/calculate_debt_consolidate'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::calculate_debt_consolidate'
+    _title: 'Debt Consolidate'
+  options:
+     no_cache: TRUE
+  requirements:
+    _access: 'TRUE'
+customise.third_party_showleadinfo:
+  path: '/tp_showleadinfo'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::third_party_showleadinfo'
+    _title: 'Show Lead Info'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.third_party_showleadinfo_ajax:
+  path: '/tp_showleadinfo_ajax'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::third_party_showleadinfo_ajax'
+    _title: 'Show Lead Info Content'
+  options:
+    no_cache: TRUE
+  requirements:
+    _access: 'TRUE'
+customise.third_party_pre_qual:
+  path: '/tp_pre_qual'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::third_party_pre_qual'
+    _title: 'Third Party Landing'
+  options:
+    no_cache: TRUE
+  requirements:
+    _access: 'TRUE'
+customise.third_party_pre_qual_ajax:
+  path: '/tp_pre_qual_ajax'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::third_party_pre_qual_ajax'
+    _title: 'Third Party Landing Content'
+  options:
+    no_cache: TRUE
+  requirements:
+    _access: 'TRUE'
+customise.third_party_pre_qual_thank:
+  path: '/tp_pre_qual_thank'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::third_party_pre_qual_thank'
+    _title: 'Third Party Landing Thank You'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.third_party_pre_qual_thank_ajax:
+  path: '/tp_pre_qual_thank_ajax'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::third_party_pre_qual_thank_ajax'
+    _title: 'Third Party Landing Thank Content'
+  options:
+    no_cache: TRUE
+  requirements:
+    _access: 'TRUE'
+customise.what_is_my_balance:
+  path: '/what_is_my_balance'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::what_is_my_balance'
+    _title: 'What is My Balance'
+  options:
+    no_cache: TRUE
+  requirements:
+    _access: 'TRUE'
+     
+customise.loan_payment_calc:
+  path: '/loan_payment_calc'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::loan_payment_calc'
+    _title: 'Loan payment calculator'
+  options:
+    no_cache: TRUE
+  requirements:
+    _access: 'TRUE'
+
+customise.settings_form:
+   path: '/admin/config/reviews_api/settings'
+   defaults:
+    _form: '\Drupal\customise\Form\ReviewAPISettingsForm'
+    _title: 'Reviews API configuration'
+   requirements:
+    _permission: 'administer site configuration'
+
+customise.our_terms_ajax:
+  path: '/our_terms_ajax'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::our_terms_ajax'
+    _title: 'Terms of Use'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.privacy_policy_ajax:
+  path: '/privacy_policy_ajax'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::privacy_policy_ajax'
+    _title: 'privacy policy'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.disclosure_ajax:
+  path: '/disclosure_ajax'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::disclosure_ajax'
+    _title: 'Disclosures'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+customise.job_openings:
+  path: '/job_openings'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::job_openings'
+    _title: 'Job Openings'
+  options:
+    no_cache: TRUE
+  requirements:
+    _access: 'TRUE' 
+customise.job_application:
+  path: '/job_application'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::job_application'
+    _title: 'Job Application'
+  options:
+    no_cache: TRUE
+  requirements:
+    _access: 'TRUE'  
+    
+customise.state_mortgage_license:
+  path: '/statemortgagelicense/{tid}'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::state_mortgage_license'
+    _title: 'state_mortgage_license_result'
+  options:
+    no_cache: TRUE
+  requirements:
+    _access: 'TRUE'   
+    
+customise.state_list:
+  path: '/states'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::state_list'
+    _title: 'state_list_result'
+  options:
+    no_cache: TRUE
+  requirements:
+    _access: 'TRUE'
+
+customise.caculator_types:
+   path: 'calculator-types'
+   defaults:
+     _controller: '\Drupal\customise\Controller\CustomiseController::calculator_types'
+   options:
+     no_cache: TRUE
+   requirements:
+     _access: 'TRUE'
+customise.caculator_sub_types:
+   path: 'calculator_sub_types'
+   defaults:
+     _controller: '\Drupal\customise\Controller\CustomiseController::calculator_sub_types'
+   options:
+     no_cache: TRUE
+   requirements:
+     _access: 'TRUE'
+customise.good_mortage_tv_videos_ajax:
+  path: '/good_mortage_tv_videos_ajax'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::good_mortage_tv_videos_ajax'
+    _title: 'Good Mortage Tv Videos Ajax'
+  options:
+    no_cache: TRUE
+  requirements:
+    _access: 'TRUE'
+customise.good_mortgage_category_videos_ajax:
+  path: '/good_mortgage_category_videos_ajax/{tid}/{nid}'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::good_mortgage_category_videos_ajax'
+    _title: 'Good Mortage Category Videos Ajax'
+  options:
+    no_cache: TRUE
+  requirements:
+    _access: 'TRUE'
+customise.global_search:
+  path: '/global_search'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::global_search'
+    _title: 'Global Search'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+
+customise.get_footer_links_json_data:
+  path: '/get_wm_configuration'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::get_footer_links_json_data'
+    _title: 'Footer links json data'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+     
+customise.all_product_details_ajax:
+  path: '/products_ajax'
+  defaults:
+    _controller: '\Drupal\customise\Controller\CustomiseController::all_product_details_ajax'
+    _title: 'Products'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+     
+
+customise.purchase:
+  path: '/purchase'
+  defaults:
+    _controller: '\Drupal\customise\Controller\QuickRateController::loan_purpose'
+    _title: 'purchase'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+     
+customise.refinance:
+  path: '/refinance'
+  defaults:
+    _controller: '\Drupal\customise\Controller\QuickRateController::loan_purpose'
+    _title: 'purchase'
+  options:
+     no_cache: TRUE
+  requirements:
+     _access: 'TRUE'
+ 

@@ -1,0 +1,11 @@
+global-styling:
+  version: VERSION
+  css:
+    base:
+      css/adminimal.css: {}
+    
+global-script:
+   version: VERSION  
+   js:
+        js/adminimal.js: {}
+

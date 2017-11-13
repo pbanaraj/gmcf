@@ -1,0 +1,35 @@
+{#
+/**
+ * Available variables
+ * 
+ * items - to access nodes item.content['#node']
+ * parentNode
+ * columns
+ */
+
+#}
+{% set itemsPerRowClass = 'col-lg-6' %}
+
+{% if columns == 1 %}
+  {% set itemsPerRowClass = 'col-lg-12' %}
+{% elseif columns == 3 %}
+  {% set itemsPerRowClass = 'col-lg-4' %}
+{% elseif columns == 4 %}
+  {% set itemsPerRowClass = 'col-lg-3' %}
+{% endif %}
+
+<div class="row">
+  {% for item in items %}
+    {#node#}
+    {% set node = item.content['#node'] %}
+
+    {% if node.bundle() == 'markup' %}
+      {#Body#}
+      {% set body = (node.hasField('body')) ? node.body.value : '' %}
+
+      <div class="{{itemsPerRowClass}}">
+        {{body|raw}}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
